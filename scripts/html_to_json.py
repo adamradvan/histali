@@ -5,7 +5,7 @@ Extracts food data from HTML (converted from PDF via pdftohtml) into JSON format
 Supports both pdftohtml format and pdf24 online converter format.
 
 Usage:
-    python html_to_json.py [html_file]
+    python scripts/html_to_json.py [html_file]
 
 If no html_file is provided, uses the latest file in translations/ folder.
 """
@@ -322,28 +322,29 @@ def create_json_structure(foods: list) -> dict:
 def main():
     """Main function."""
     script_dir = Path(__file__).parent
+    project_dir = script_dir.parent  # Root project directory
 
     # Accept HTML path as command line argument, default to translations folder
     if len(sys.argv) > 1:
         html_path = Path(sys.argv[1])
     else:
         # Try to find latest file in translations/ folder
-        translations_dir = script_dir / "translations"
+        translations_dir = project_dir / "translations"
         if translations_dir.exists():
             html_files = sorted(translations_dir.glob("translated-*.html"), reverse=True)
             if html_files:
                 html_path = html_files[0]
                 print(f"Using latest translation: {html_path.name}")
             else:
-                html_path = script_dir / "foodlist.html"
+                html_path = project_dir / "foodlist.html"
         else:
-            html_path = script_dir / "foodlist.html"
+            html_path = project_dir / "foodlist.html"
 
-    output_path = script_dir / "data.json"
+    output_path = project_dir / "data.json"
 
     if not html_path.exists():
         print(f"Error: HTML file not found: {html_path}")
-        print("Run ./pdf_to_html.sh first to generate the HTML file")
+        print("Run ./scripts/pdf_to_html.sh first to generate the HTML file")
         sys.exit(1)
 
     print(f"Loading {html_path}...")

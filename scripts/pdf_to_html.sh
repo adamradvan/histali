@@ -3,15 +3,16 @@
 # Converts foodlist.pdf to HTML using poppler's pdftohtml
 # Output: translations/translated-{ISO-date}.html
 #
-# Usage: ./pdf_to_html.sh [pdf_file]
+# Usage: ./scripts/pdf_to_html.sh [pdf_file]
 #   pdf_file: Optional, defaults to foodlist.pdf
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PDF_FILE="${1:-$SCRIPT_DIR/foodlist.pdf}"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+PDF_FILE="${1:-$PROJECT_DIR/foodlist.pdf}"
 DATE=$(date +%Y-%m-%d)
-OUTPUT_DIR="$SCRIPT_DIR/translations"
+OUTPUT_DIR="$PROJECT_DIR/translations"
 OUTPUT_FILE="$OUTPUT_DIR/translated-$DATE.html"
 
 # Check if pdftohtml is installed
@@ -36,4 +37,4 @@ pdftohtml -noframes -enc UTF-8 "$PDF_FILE" "$OUTPUT_FILE"
 echo "Done! Output: $OUTPUT_FILE"
 echo ""
 echo "Next step (Step 2: HTML → JSON):"
-echo "  python html_to_json.py"
+echo "  python scripts/html_to_json.py"
