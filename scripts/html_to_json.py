@@ -340,7 +340,7 @@ def main():
         else:
             html_path = project_dir / "foodlist.html"
 
-    output_path = project_dir / "data.json"
+    output_path = project_dir / "data" / "sk.json"
 
     if not html_path.exists():
         print(f"Error: HTML file not found: {html_path}")
