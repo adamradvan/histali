@@ -6,6 +6,9 @@ on:
     paths-ignore:
       - '.github/**'
 
+permissions:
+  contents: write
+
 jobs:
   update-version:
     runs-on: ubuntu-latest
