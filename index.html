@@ -213,7 +213,7 @@
                         <tr>
                             <th class="px-2 py-3 text-center text-sm font-semibold text-gray-700 w-12"></th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-16">Hist.</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24">Príznaky</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24 hidden md:table-cell">Príznaky</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Potravina</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Poznámky</th>
                         </tr>
@@ -568,7 +568,6 @@
 
         function scrollToTop() {
             searchInput.scrollIntoView({ behavior: 'smooth' });
-            searchInput.focus();
         }
 
         // Set up scroll FAB event listeners
@@ -602,7 +601,7 @@
                         ${config.value}
                     </span>
                 </td>
-                <td class="px-4 py-3">
+                <td class="px-4 py-3 hidden md:table-cell">
                     <span class="flex gap-1 items-center">${flagsHtml}</span>
                 </td>
                 <td class="px-4 py-3">
