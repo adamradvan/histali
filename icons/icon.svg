@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- White background -->
+  <rect width="512" height="512" fill="#ffffff"/>
+  <!-- Wine-red border -->
+  <rect x="16" y="16" width="480" height="480" fill="none" stroke="#722F37" stroke-width="32" rx="48"/>
+  <!-- Wine-red H -->
+  <text x="256" y="380" font-family="Arial, sans-serif" font-size="360" font-weight="bold" fill="#722F37" text-anchor="middle">H</text>
+</svg>
