@@ -5,7 +5,7 @@
 
 A searchable food compatibility guide for people with histamine intolerance. Works offline as a Progressive Web App.
 
-**[Try it Now](https://adamradvan.github.io/histali/)**
+**<a href="https://adamradvan.github.io/histali/" target="_blank">Try it Now</a>**
 
 ---
 
