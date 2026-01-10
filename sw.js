@@ -1,4 +1,4 @@
-const CACHE_NAME = 'histali-1768038891';
+const CACHE_NAME = 'histali-1768045463';
 const ASSETS_TO_CACHE = [
   '/histali/',
   '/histali/index.html',
@@ -6,7 +6,9 @@ const ASSETS_TO_CACHE = [
   '/histali/icons/icon-192.png',
   '/histali/icons/icon-512.png',
   '/histali/icons/apple-touch-icon.png',
-  '/histali/manifest.json'
+  '/histali/manifest.json',
+  '/histali/robots.txt',
+  '/histali/sitemap.xml'
 ];
 
 // Install - cache assets

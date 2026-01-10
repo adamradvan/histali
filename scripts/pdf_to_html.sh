@@ -10,9 +10,9 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-PDF_FILE="${1:-$PROJECT_DIR/foodlist.pdf}"
+PDF_FILE="${1:-$PROJECT_DIR/source/foodlist.pdf}"
 DATE=$(date +%Y-%m-%d)
-OUTPUT_DIR="$PROJECT_DIR/translations"
+OUTPUT_DIR="$PROJECT_DIR/source/translations"
 OUTPUT_FILE="$OUTPUT_DIR/translated-$DATE.html"
 
 # Check if pdftohtml is installed

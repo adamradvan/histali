@@ -17,6 +17,31 @@
     <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Histali - Kompletný zoznam 460+ potravín pre histamínovú intoleranciu. Vyhľadávajte a filtrujte jedlá podľa úrovne histamínu. Založené na dátach SIGHI.">
+    <meta name="keywords" content="histamínová intolerancia, zoznam potravín, histamín, diéta, SIGHI, kompatibilita potravín, nízkohistamínová diéta">
+    <meta name="author" content="Adam Radvan">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://adamradvan.github.io/histali/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adamradvan.github.io/histali/">
+    <meta property="og:title" content="Histali - Zoznam potravín pre histamínovú intoleranciu">
+    <meta property="og:description" content="Interaktívna databáza 460+ potravín s hodnotením kompatibility pri histamínovej intolerancii. Vyhľadávajte, filtrujte a nájdite jedlá vhodné pre vašu diétu.">
+    <meta property="og:locale" content="sk_SK">
+    <meta property="og:site_name" content="Histali">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://adamradvan.github.io/histali/">
+    <meta name="twitter:title" content="Histali - Zoznam potravín pre histamínovú intoleranciu">
+    <meta name="twitter:description" content="Interaktívna databáza 460+ potravín s hodnotením kompatibility pri histamínovej intolerancii.">
+
+    <!-- hreflang (current + future languages) -->
+    <link rel="alternate" hreflang="sk" href="https://adamradvan.github.io/histali/">
+    <link rel="alternate" hreflang="x-default" href="https://adamradvan.github.io/histali/">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -315,10 +340,126 @@
             background-color: #eff6ff;
         }
     </style>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Histali",
+        "alternateName": "Histali - Zoznam potravín",
+        "description": "Interaktívna databáza potravín pre osoby s histamínovou intoleranciou. Obsahuje 460+ potravín s hodnotením kompatibility podľa SIGHI.",
+        "url": "https://adamradvan.github.io/histali/",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "author": {
+            "@type": "Person",
+            "name": "Adam Radvan",
+            "url": "https://www.linkedin.com/in/adam-radvan"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+        },
+        "featureList": [
+            "Vyhľadávanie potravín",
+            "Filtrovanie podľa hladiny histamínu",
+            "Offline prístup (PWA)",
+            "Responzívny dizajn"
+        ],
+        "inLanguage": "sk",
+        "isAccessibleForFree": true
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": "SIGHI Histamine Food Compatibility List - Slovak",
+        "description": "Databáza 460+ potravín s hodnotením kompatibility pri histamínovej intolerancii. Údaje založené na zozname SIGHI.",
+        "url": "https://adamradvan.github.io/histali/data/sk.json",
+        "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+        "creator": {
+            "@type": "Organization",
+            "name": "SIGHI - Swiss Interest Group Histamine Intolerance",
+            "url": "https://www.mastzellaktivierung.info"
+        },
+        "keywords": ["histamín", "potraviny", "intolerancia", "diéta", "SIGHI"],
+        "inLanguage": "sk"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Histali",
+        "url": "https://adamradvan.github.io/histali/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://adamradvan.github.io/histali/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        },
+        "inLanguage": "sk"
+    }
+    </script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Skip to main content link for keyboard/screen reader users -->
     <a href="#main-content" class="skip-link">Preskočiť na obsah</a>
+
+    <!-- Fallback content for crawlers and no-JS browsers -->
+    <noscript>
+        <div class="max-w-4xl mx-auto p-8">
+            <h1 class="text-4xl font-bold mb-4">Histali - Zoznam potravín pre histamínovú intoleranciu</h1>
+            <p class="mb-6">Táto aplikácia vyžaduje JavaScript pre plnú funkčnosť. Nižšie nájdete prehľad dostupného obsahu.</p>
+
+            <h2 class="text-2xl font-semibold mb-3">O aplikácii</h2>
+            <p class="mb-4">Histali je interaktívna databáza 460+ potravín s hodnotením kompatibility pri histamínovej intolerancii. Údaje sú založené na zozname SIGHI (Swiss Interest Group Histamine Intolerance).</p>
+
+            <h2 class="text-2xl font-semibold mb-3">Kategórie potravín</h2>
+            <ul class="list-disc list-inside mb-4 space-y-1">
+                <li><strong>Mliečne výrobky</strong> - mlieko, jogurt, syry, maslo</li>
+                <li><strong>Vajcia</strong> - slepačie, prepeličie</li>
+                <li><strong>Mäso</strong> - hovädzie, bravčové, hydina, zverina</li>
+                <li><strong>Ryby</strong> - čerstvé ryby, konzervované ryby</li>
+                <li><strong>Morské plody</strong> - krevety, mušle, chobotnice</li>
+                <li><strong>Zelenina</strong> - čerstvá a konzervovaná zelenina</li>
+                <li><strong>Ovocie</strong> - čerstvé a sušené ovocie</li>
+                <li><strong>Strukoviny</strong> - fazuľa, šošovica, cícer</li>
+                <li><strong>Orechy a semená</strong> - mandle, vlašské orechy, slnečnicové semená</li>
+                <li><strong>Škroby a obilniny</strong> - ryža, zemiaky, chlieb</li>
+                <li><strong>Byliny a korenie</strong> - bazalka, oregano, kurkuma</li>
+                <li><strong>Nápoje</strong> - čaj, káva, alkohol</li>
+                <li><strong>Oleje a tuky</strong> - olivový olej, kokosový olej</li>
+                <li><strong>Sladidlá</strong> - med, cukor, sirupy</li>
+                <li><strong>Huby</strong> - šampiňóny, hríby</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold mb-3">Systém hodnotenia</h2>
+            <ul class="list-disc list-inside mb-4 space-y-1">
+                <li><strong>0 - Dobre tolerované</strong> - vhodné pre nízkohistamínovú diétu</li>
+                <li><strong>1 - Stredne tolerované</strong> - konzumujte s mierou</li>
+                <li><strong>2 - Zle tolerované</strong> - odporúča sa vyhýbať</li>
+                <li><strong>3 - Veľmi zle tolerované</strong> - vyhýbajte sa úplne</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold mb-3">Špeciálne príznaky</h2>
+            <ul class="list-disc list-inside mb-4 space-y-1">
+                <li><strong>H</strong> - Vysoký obsah histamínu</li>
+                <li><strong>H!</strong> - Rýchle kazenie / tvorba histamínu</li>
+                <li><strong>A</strong> - Iné biogénne amíny</li>
+                <li><strong>L</strong> - Histamínový liberátor</li>
+                <li><strong>B</strong> - Blokátor DAO</li>
+            </ul>
+
+            <p class="text-sm text-gray-600">Zdroj dát: <a href="https://www.mastzellaktivierung.info" class="text-blue-600 underline">SIGHI</a> - Swiss Interest Group Histamine Intolerance, Heinz Lamprecht</p>
+        </div>
+    </noscript>
 
     <div class="max-w-6xl mx-auto px-4 py-8">
         <!-- Header -->

@@ -1,9 +1,12 @@
 .idea
-translations
-source
-foodlist.pdf
-task.md
-todo.md
+
+# Dev documentation
+docs/
+
+# Source data and translations
+source/
+
+# Personal notes
 CLAUDE.md
 AGENTS.md
 WARP.md

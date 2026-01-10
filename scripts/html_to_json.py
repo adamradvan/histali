@@ -328,8 +328,8 @@ def main():
     if len(sys.argv) > 1:
         html_path = Path(sys.argv[1])
     else:
-        # Try to find latest file in translations/ folder
-        translations_dir = project_dir / "translations"
+        # Try to find latest file in source/translations/ folder
+        translations_dir = project_dir / "source" / "translations"
         if translations_dir.exists():
             html_files = sorted(translations_dir.glob("translated-*.html"), reverse=True)
             if html_files:

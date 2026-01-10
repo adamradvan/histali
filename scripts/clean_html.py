@@ -60,10 +60,14 @@ def clean_html(input_path: str, output_path: str) -> dict:
 
 
 if __name__ == '__main__':
-    input_file = '/Users/adamradvan/histali/source/pdf24.html'
-    output_file = '/Users/adamradvan/histali/pdf24_clean.html'
+    from pathlib import Path
+    script_dir = Path(__file__).parent
+    project_dir = script_dir.parent
 
-    stats = clean_html(input_file, output_file)
+    input_file = project_dir / 'source' / 'pdf24.html'
+    output_file = project_dir / 'source' / 'pdf24_clean.html'
+
+    stats = clean_html(str(input_file), str(output_file))
 
     print(f"Original size: {stats['original_size']:,} bytes")
     print(f"Final size: {stats['final_size']:,} bytes")

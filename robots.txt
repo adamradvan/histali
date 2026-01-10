@@ -1,0 +1,18 @@
+# Histali - Robots.txt
+# https://adamradvan.github.io/histali/
+
+User-agent: *
+Allow: /
+
+# Block development/utility files
+Disallow: /scripts/
+Disallow: /source/
+Disallow: /docs/
+
+# Allow important files
+Allow: /data/
+Allow: /icons/
+Allow: /manifest.json
+
+# Sitemap location
+Sitemap: https://adamradvan.github.io/histali/sitemap.xml
