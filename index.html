@@ -275,9 +275,49 @@
             outline: 2px solid #93c5fd;
             outline-offset: 2px;
         }
+
+        /* Screen reader only - visually hidden but accessible */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Skip link - visible on focus */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            z-index: 100;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 0 0 8px 0;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus styles for table rows */
+        .food-row:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: -2px;
+            background-color: #eff6ff;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
+    <!-- Skip to main content link for keyboard/screen reader users -->
+    <a href="#main-content" class="skip-link">Preskočiť na obsah</a>
+
     <div class="max-w-6xl mx-auto px-4 py-8">
         <!-- Header -->
         <header class="mb-8 flex flex-col items-center justify-center" style="min-height: var(--header-size, 15vh);">
@@ -289,20 +329,23 @@
         <div class="mb-6 relative">
             <div class="flex gap-2">
                 <div class="relative flex-1">
+                    <label for="searchInput" class="sr-only">Hľadať potravinu</label>
                     <input
                         type="text"
                         id="searchInput"
                         placeholder="Hľadať potravinu..."
                         class="w-full px-4 py-3 pl-12 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                     >
-                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                     <button
                         id="clearSearch"
                         class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden"
+                        aria-label="Vymazať vyhľadávanie"
+                        type="button"
                     >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
@@ -312,14 +355,17 @@
                     id="filterBtn"
                     class="relative px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition flex items-center justify-center"
                     aria-label="Filtrovať"
+                    aria-expanded="false"
+                    aria-controls="filterPanel"
+                    type="button"
                 >
-                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-gray-600" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                     </svg>
-                    <span id="filterBadge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center">0</span>
+                    <span id="filterBadge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center" aria-hidden="true">0</span>
                 </button>
             </div>
-            <div id="searchStats" class="mt-2 text-sm text-gray-500"></div>
+            <div id="searchStats" class="mt-2 text-sm text-gray-500" aria-live="polite" aria-atomic="true"></div>
 
             <!-- Filter Panel Backdrop (mobile only) -->
             <div id="filterBackdrop" class="sheet-backdrop md:hidden" onclick="closeFilterPanel()"></div>
@@ -349,12 +395,12 @@
 
                     <!-- Subcategory Section (collapsible) -->
                     <div class="mb-4 border-t border-gray-200 pt-4">
-                        <div class="filter-section-header flex justify-between items-center mb-3" onclick="toggleFilterSection('subcategory')">
+                        <button type="button" class="filter-section-header collapsed flex justify-between items-center mb-3 w-full text-left" aria-expanded="false" aria-controls="subcategoryContent" onclick="toggleFilterSection('subcategory')">
                             <h4 class="text-sm font-semibold text-gray-700">Podkategória</h4>
-                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </div>
+                        </button>
                         <div class="filter-section-content collapsed" id="subcategoryContent">
                             <div class="space-y-2" id="subcategoryFilters">
                                 <!-- Will be populated by JavaScript -->
@@ -364,12 +410,12 @@
 
                     <!-- Flags Section (collapsible) -->
                     <div class="border-t border-gray-200 pt-4">
-                        <div class="filter-section-header flex justify-between items-center mb-3" onclick="toggleFilterSection('flags')">
+                        <button type="button" class="filter-section-header collapsed flex justify-between items-center mb-3 w-full text-left" aria-expanded="false" aria-controls="flagsContent" onclick="toggleFilterSection('flags')">
                             <h4 class="text-sm font-semibold text-gray-700">Príznaky</h4>
-                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </div>
+                        </button>
                         <div class="filter-section-content collapsed" id="flagsContent">
                             <div class="space-y-2" id="flagsFilters">
                                 <!-- Will be populated by JavaScript -->
@@ -388,16 +434,17 @@
         </div>
 
         <!-- Food Table -->
+        <main id="main-content" role="main" aria-label="Zoznam potravín">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-100 border-b border-gray-200">
                         <tr>
-                            <th class="px-2 py-3 text-center text-sm font-semibold text-gray-700 w-12"></th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-16">Hist.</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24 hidden md:table-cell">Príznaky</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Potravina</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Poznámky</th>
+                            <th scope="col" class="px-2 py-3 text-center text-sm font-semibold text-gray-700 w-12"><span class="sr-only">Kategória</span></th>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-16" title="Hladina histamínu">Hist.</th>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24 hidden md:table-cell">Príznaky</th>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Potravina</th>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Poznámky</th>
                         </tr>
                     </thead>
                     <tbody id="foodTableBody">
@@ -408,18 +455,19 @@
         </div>
 
         <!-- Loading -->
-        <div id="loading" class="text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-blue-500"></div>
+        <div id="loading" class="text-center py-8" role="status" aria-live="polite">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-blue-500" aria-hidden="true"></div>
             <p class="mt-2 text-gray-600">Načítavam potraviny...</p>
         </div>
 
         <!-- No results -->
-        <div id="noResults" class="hidden text-center py-8">
-            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div id="noResults" class="hidden text-center py-8" role="status">
+            <svg class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <p class="mt-2 text-gray-600">Žiadne potraviny nenájdené</p>
         </div>
+        </main>
 
         <!-- Footer -->
         <footer id="footer" class="mt-8 border-t border-gray-200 pt-6 pb-4">
@@ -437,9 +485,8 @@
                     </p>
                 </div>
                 <!-- Right: Author -->
-                <a href="https://www.linkedin.com/in/adam-radvan" target="_blank" rel="noopener" class="flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-colors">
-<!--                    <span>created by</span>-->
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <a href="https://www.linkedin.com/in/adam-radvan" target="_blank" rel="noopener" class="flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-colors" aria-label="LinkedIn profil autora">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
                 </a>
@@ -449,14 +496,14 @@
 
     <!-- Sheet (Bottom on mobile, Right on desktop) -->
     <div id="sheetBackdrop" class="sheet-backdrop" onclick="closeSheet()"></div>
-    <div id="sheet" class="sheet">
+    <div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
         <div class="sheet-handle" id="sheetHandle">
             <div class="handle-bar"></div>
         </div>
         <div class="sheet-header">
             <h2 id="sheetTitle" class="text-xl font-bold text-gray-800"></h2>
-            <button onclick="closeSheet()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button id="sheetCloseBtn" onclick="closeSheet()" class="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Zavrieť" type="button">
+                <svg class="w-6 h-6 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
@@ -467,13 +514,13 @@
     </div>
 
     <!-- Scroll Navigation FAB -->
-    <button id="scrollDownBtn" class="scroll-fab" aria-label="Prejsť na koniec">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <button id="scrollDownBtn" class="scroll-fab" aria-label="Prejsť na koniec" type="button">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
     </button>
-    <button id="scrollUpBtn" class="scroll-fab hidden" aria-label="Prejsť na začiatok">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <button id="scrollUpBtn" class="scroll-fab hidden" aria-label="Prejsť na začiatok" type="button">
+        <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
         </svg>
     </button>
@@ -597,6 +644,9 @@
         let touchCurrentY = 0;
         let isDragging = false;
 
+        // Focus management
+        let previouslyFocusedElement = null;
+
         // Check if desktop mode (right sheet)
         const isDesktop = () => window.innerWidth >= 768;
 
@@ -688,10 +738,19 @@
             html += '</div>';
             sheetContent.innerHTML = html;
 
+            // Save currently focused element for later restoration
+            previouslyFocusedElement = document.activeElement;
+
             // Show sheet
             sheet.classList.add('active');
             sheetBackdrop.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            // Move focus to close button after sheet animation
+            setTimeout(() => {
+                const closeBtn = document.getElementById('sheetCloseBtn');
+                if (closeBtn) closeBtn.focus();
+            }, 100);
         }
 
         // Close sheet
@@ -700,6 +759,12 @@
             sheetBackdrop.classList.remove('active');
             document.body.style.overflow = '';
             sheet.style.transform = '';
+
+            // Restore focus to previously focused element
+            if (previouslyFocusedElement && previouslyFocusedElement.focus) {
+                previouslyFocusedElement.focus();
+                previouslyFocusedElement = null;
+            }
         }
 
         // Swipe gesture handling (mobile only - bottom sheet)
@@ -740,10 +805,30 @@
         sheetHandle.addEventListener('touchmove', handleTouchMove, { passive: true });
         sheetHandle.addEventListener('touchend', handleTouchEnd);
 
-        // Close on Escape key
+        // Keyboard handling for sheet (Escape to close, Tab to trap focus)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sheet.classList.contains('active')) {
+            if (!sheet.classList.contains('active')) return;
+
+            if (e.key === 'Escape') {
                 closeSheet();
+                return;
+            }
+
+            // Focus trap within sheet
+            if (e.key === 'Tab') {
+                const focusableElements = sheet.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
             }
         });
 
@@ -778,6 +863,7 @@
         function openFilterPanel() {
             filterPanel.classList.add('active');
             filterBackdrop.classList.add('active');
+            filterBtn.setAttribute('aria-expanded', 'true');
             if (!isDesktop()) {
                 document.body.style.overflow = 'hidden';
             }
@@ -786,14 +872,16 @@
         function closeFilterPanel() {
             filterPanel.classList.remove('active');
             filterBackdrop.classList.remove('active');
+            filterBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
 
         function toggleFilterSection(section) {
             const contentEl = document.getElementById(`${section}Content`);
             const headerEl = contentEl.previousElementSibling;
-            contentEl.classList.toggle('collapsed');
-            headerEl.classList.toggle('collapsed');
+            const isCollapsed = contentEl.classList.toggle('collapsed');
+            headerEl.classList.toggle('collapsed', isCollapsed);
+            headerEl.setAttribute('aria-expanded', !isCollapsed);
         }
 
         // Populate filter checkboxes
@@ -993,23 +1081,28 @@
             const subConfig = SUBCATEGORY_CONFIG[food.subcategory] || SUBCATEGORY_CONFIG.OTHER;
 
             // Create flag badges HTML
-            let flagsHtml = '-';
+            let flagsHtml = '<span aria-hidden="true">-</span>';
             if (food.flags && food.flags.length > 0) {
                 flagsHtml = food.flags.map(f => {
                     const flagConfig = FLAG_CONFIG[f];
                     if (flagConfig) {
-                        return `<span class="inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold text-white ${flagConfig.color}">${flagConfig.abbr}</span>`;
+                        return `<span class="inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold text-white ${flagConfig.color}" title="${escapeHtml(flagConfig.name)}" aria-hidden="true">${flagConfig.abbr}</span>`;
                     }
                     return f;
                 }).join(' ');
             }
 
+            const histDesc = HISTAMINE_DESCRIPTIONS[food.histamineLevel] || { title: 'Neznáme', subtitle: '' };
+
             const tr = document.createElement('tr');
             tr.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors food-row';
+            tr.setAttribute('tabindex', '0');
+            tr.setAttribute('role', 'button');
+            tr.setAttribute('aria-label', `${food.name}, ${histDesc.title}`);
             tr.innerHTML = `
-                <td class="px-2 py-3 text-center text-xl">${subConfig.emoji || ''}</td>
+                <td class="px-2 py-3 text-center text-xl" aria-hidden="true">${subConfig.emoji || ''}</td>
                 <td class="px-4 py-3">
-                    <span class="inline-block w-8 h-8 rounded ${config.color} ${config.textColor} text-center font-bold leading-8">
+                    <span class="inline-block w-8 h-8 rounded ${config.color} ${config.textColor} text-center font-bold leading-8" title="${escapeHtml(histDesc.title)}" aria-hidden="true">
                         ${config.value}
                     </span>
                 </td>
@@ -1024,6 +1117,12 @@
                 </td>
             `;
             tr.addEventListener('click', () => openSheet(food));
+            tr.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openSheet(food);
+                }
+            });
             return tr;
         }
 
