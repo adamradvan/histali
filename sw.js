@@ -1,4 +1,4 @@
-const CACHE_NAME = 'histali-1768036663';
+const CACHE_NAME = 'histali-1768036817';
 const ASSETS_TO_CACHE = [
   '/histali/',
   '/histali/index.html',
