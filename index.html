@@ -339,6 +339,32 @@
             outline-offset: -2px;
             background-color: #eff6ff;
         }
+
+        /* Sortable column headers */
+        .sortable-header {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s ease;
+        }
+        .sortable-header:hover {
+            background-color: #e5e7eb;
+        }
+        .sortable-header:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: -2px;
+        }
+        .sort-indicator {
+            display: inline-block;
+            margin-left: 4px;
+            opacity: 0.3;
+            transition: opacity 0.15s ease;
+        }
+        .sortable-header:hover .sort-indicator {
+            opacity: 0.6;
+        }
+        .sortable-header.sorted .sort-indicator {
+            opacity: 1;
+        }
     </style>
 
     <!-- JSON-LD Structured Data -->
@@ -584,9 +610,25 @@
                     <thead class="bg-gray-100 border-b border-gray-200">
                         <tr>
                             <th scope="col" class="px-2 py-3 text-center text-sm font-semibold text-gray-700 w-12"><span class="sr-only">Kategória</span></th>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-16" title="Hladina histamínu">Hist.</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-20 sortable-header whitespace-nowrap"
+                                id="header-histamine"
+                                tabindex="0"
+                                role="button"
+                                aria-sort="none"
+                                title="Hladina histamínu - kliknite pre zoradenie"
+                                onclick="handleSort('histamineLevel')"
+                                onkeydown="handleSortKeydown(event, 'histamineLevel')">Hist.<span class="sort-indicator" aria-hidden="true">↕</span></th>
                             <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24 hidden md:table-cell">Príznaky</th>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Potravina</th>
+                            <th scope="col"
+                                class="px-4 py-3 text-left text-sm font-semibold text-gray-700 sortable-header"
+                                id="header-name"
+                                tabindex="0"
+                                role="button"
+                                aria-sort="none"
+                                title="Potravina - kliknite pre zoradenie"
+                                onclick="handleSort('name')"
+                                onkeydown="handleSortKeydown(event, 'name')">Potravina<span class="sort-indicator" aria-hidden="true">↕</span></th>
                             <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Poznámky</th>
                         </tr>
                     </thead>
@@ -679,6 +721,16 @@
             VARIABLE: { value: '-', color: 'bg-hist-unknown', textColor: 'text-white' }
         };
 
+        // Histamine level sort order (lower = better tolerated)
+        const HISTAMINE_SORT_ORDER = {
+            WELL_TOLERATED: 0,
+            MODERATELY_TOLERATED: 1,
+            POORLY_TOLERATED: 2,
+            VERY_POORLY_TOLERATED: 3,
+            INSUFFICIENT_INFO: 4,
+            VARIABLE: 5
+        };
+
         // Full descriptions for histamine levels (Slovak)
         const HISTAMINE_DESCRIPTIONS = {
             WELL_TOLERATED: { title: 'Dobre tolerované', subtitle: 'vhodné pre histamínovú diétu' },
@@ -750,6 +802,12 @@
             histamineLevels: new Set(),
             subcategories: new Set(),
             flags: new Set()
+        };
+
+        // Sort state
+        const sortState = {
+            column: null,      // 'name' | 'histamineLevel' | null
+            direction: null    // 'asc' | 'desc' | null
         };
 
         // DOM elements
@@ -1096,6 +1154,61 @@
             handleSearch();
         }
 
+        // Handle sort column click
+        function handleSort(column) {
+            if (sortState.column === column) {
+                // Same column: toggle direction
+                if (sortState.direction === 'asc') {
+                    sortState.direction = 'desc';
+                } else if (sortState.direction === 'desc') {
+                    // Reset to original order
+                    sortState.column = null;
+                    sortState.direction = null;
+                }
+            } else {
+                // New column: start with ascending
+                sortState.column = column;
+                sortState.direction = 'asc';
+            }
+
+            updateSortIndicators();
+            handleSearch();
+        }
+
+        // Handle keyboard activation for sort
+        function handleSortKeydown(event, column) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleSort(column);
+            }
+        }
+
+        // Update visual sort indicators
+        function updateSortIndicators() {
+            const columns = ['name', 'histamineLevel'];
+            const columnToHeaderId = {
+                name: 'header-name',
+                histamineLevel: 'header-histamine'
+            };
+
+            columns.forEach(col => {
+                const header = document.getElementById(columnToHeaderId[col]);
+                if (!header) return;
+
+                const indicator = header.querySelector('.sort-indicator');
+
+                if (sortState.column === col) {
+                    header.classList.add('sorted');
+                    header.setAttribute('aria-sort', sortState.direction === 'asc' ? 'ascending' : 'descending');
+                    indicator.textContent = sortState.direction === 'asc' ? '↑' : '↓';
+                } else {
+                    header.classList.remove('sorted');
+                    header.setAttribute('aria-sort', 'none');
+                    indicator.textContent = '↕';
+                }
+            });
+        }
+
         // Get total active filter count
         function getActiveFilterCount() {
             return filterState.histamineLevels.size + filterState.subcategories.size + filterState.flags.size;
@@ -1147,6 +1260,12 @@
             const query = searchInput.value.trim();
             if (query) {
                 params.set('q', query);
+            }
+
+            // Add sort state
+            if (sortState.column) {
+                params.set('sort', sortState.column);
+                params.set('dir', sortState.direction);
             }
 
             const newURL = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
@@ -1205,6 +1324,15 @@
                     checkbox.checked = true;
                 }
             });
+
+            // Load sort state
+            const sortCol = params.get('sort');
+            const sortDir = params.get('dir');
+            if (sortCol && (sortCol === 'name' || sortCol === 'histamineLevel')) {
+                sortState.column = sortCol;
+                sortState.direction = sortDir === 'desc' ? 'desc' : 'asc';
+                updateSortIndicators();
+            }
 
             updateFilterBadge();
         }
@@ -1347,6 +1475,33 @@
             return filtered;
         }
 
+        // Sort foods based on current sort state
+        function sortFoods(foods) {
+            // If no sort applied, return as-is (preserves original order or search relevance)
+            if (!sortState.column || !sortState.direction) {
+                return foods;
+            }
+
+            // Create a copy to avoid mutating the input
+            const sorted = [...foods];
+            const direction = sortState.direction === 'asc' ? 1 : -1;
+
+            sorted.sort((a, b) => {
+                if (sortState.column === 'name') {
+                    // Alphabetical sort using Slovak locale
+                    return direction * a.name.localeCompare(b.name, 'sk');
+                } else if (sortState.column === 'histamineLevel') {
+                    // Numeric sort using order map
+                    const orderA = HISTAMINE_SORT_ORDER[a.histamineLevel] ?? 99;
+                    const orderB = HISTAMINE_SORT_ORDER[b.histamineLevel] ?? 99;
+                    return direction * (orderA - orderB);
+                }
+                return 0;
+            });
+
+            return sorted;
+        }
+
         // Handle search input
         function handleSearch() {
             const query = searchInput.value.trim();
@@ -1354,8 +1509,15 @@
             // Show/hide clear button
             clearSearchBtn.classList.toggle('hidden', !query);
 
-            // Filter and render
-            const filtered = filterFoods(query);
+            // Filter foods
+            let filtered = filterFoods(query);
+
+            // Apply user sorting (only if not in search mode, or if explicitly sorted)
+            // When searching without explicit sort, filterFoods already applies relevance sorting
+            if (!query || sortState.column) {
+                filtered = sortFoods(filtered);
+            }
+
             renderFoods(filtered);
 
             // Update stats
