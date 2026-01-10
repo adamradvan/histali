@@ -1,5 +1,9 @@
 .idea
 
+# Lighthouse reports
+.lighthouse-reports/
+*.report.html
+
 # Dev documentation
 docs/
 

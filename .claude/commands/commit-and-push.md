@@ -1,10 +1,15 @@
 ---
 description: Stage all changes, create a commit with a meaningful message, and push to remote
-allowed-tools: Bash(git:*)
+allowed-tools: Bash(git:*), Bash(rm:*), Bash(pkill:*)
 ---
 
 Perform these steps:
 
+0. **Cleanup first**: Remove any lighthouse reports or temp files:
+   ```bash
+   rm -r .lighthouse-reports/ *.report.html 2>/dev/null || true
+   pkill -f "python3 -m http.server 8888" 2>/dev/null || true
+   ```
 1. Run `git status` to see all changes
 2. Run `git diff` to understand what changed
 3. Stage all changes with `git add .`
