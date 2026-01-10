@@ -547,7 +547,7 @@
 
                 <!-- Sticky Header with clear button -->
                 <div class="flex justify-between items-center px-5 py-4 border-b border-gray-200 bg-white sticky top-0 z-10 rounded-t-xl md:rounded-t-lg">
-                    <h2 class="text-lg font-bold text-gray-800">Filtre</h2>
+                    <h2 id="filterPanelTitle" class="text-lg font-bold text-gray-800">Filtre</h2>
                     <button id="clearFilters" class="px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-medium border border-blue-300 rounded-lg transition">
                         Vymazať všetko
                     </button>
@@ -556,7 +556,7 @@
                 <div class="filter-panel-content">
                     <!-- Histamine Level Section (always expanded) -->
                     <div class="mb-4">
-                        <h4 class="text-sm font-semibold text-gray-700 mb-3">Hladina histamínu</h4>
+                        <h3 class="text-sm font-semibold text-gray-700 mb-3">Hladina histamínu</h3>
                         <div class="space-y-2" id="histamineLevelFilters">
                             <!-- Will be populated by JavaScript -->
                         </div>
@@ -565,7 +565,7 @@
                     <!-- Subcategory Section (collapsible) -->
                     <div class="mb-4 border-t border-gray-200 pt-4">
                         <button type="button" class="filter-section-header collapsed flex justify-between items-center mb-3 w-full text-left" aria-expanded="false" aria-controls="subcategoryContent" onclick="toggleFilterSection('subcategory')">
-                            <h4 class="text-sm font-semibold text-gray-700">Podkategória</h4>
+                            <h3 class="text-sm font-semibold text-gray-700">Podkategória</h3>
                             <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -580,7 +580,7 @@
                     <!-- Flags Section (collapsible) -->
                     <div class="border-t border-gray-200 pt-4">
                         <button type="button" class="filter-section-header collapsed flex justify-between items-center mb-3 w-full text-left" aria-expanded="false" aria-controls="flagsContent" onclick="toggleFilterSection('flags')">
-                            <h4 class="text-sm font-semibold text-gray-700">Príznaky</h4>
+                            <h3 class="text-sm font-semibold text-gray-700">Príznaky</h3>
                             <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -603,7 +603,7 @@
         </div>
 
         <!-- Food Table -->
-        <main id="main-content" role="main" aria-label="Zoznam potravín">
+        <main id="main-content" role="main" aria-label="Zoznam potravín" style="min-height: 80vh;">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full">
