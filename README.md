@@ -39,6 +39,16 @@ Food compatibility data is sourced from the **SIGHI Food Compatibility List** by
 
 This data is for informational purposes only. Always consult a healthcare professional for medical advice.
 
+## Development
+
+After cloning, set up git hooks:
+
+```bash
+git config core.hooksPath .hooks
+```
+
+This enables the pre-commit hook that auto-updates the service worker cache version.
+
 ## License
 
 Code is open source. Food data is subject to SIGHI's non-commercial use terms with required attribution.

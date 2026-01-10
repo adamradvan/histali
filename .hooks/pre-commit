@@ -1,0 +1,4 @@
+#!/bin/bash
+VERSION="histali-$(date +%s)"
+sed -i '' "s/const CACHE_NAME = .*/const CACHE_NAME = '$VERSION';/" sw.js
+git add sw.js
