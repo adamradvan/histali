@@ -12,6 +12,7 @@ A searchable food compatibility guide for people with histamine intolerance. Wor
 ## Features
 
 - **Instant Search** — Filter 460+ foods with accent-insensitive matching
+- **Multi-Filter** — Filter by histamine level, subcategory, and flags (shareable via URL)
 - **Histamine Levels** — Color-coded compatibility ratings (well tolerated → very poorly tolerated)
 - **Detailed Info** — Flags for histamine content (H), liberators (L), DAO blockers (B), and more
 - **Works Offline** — Install as a PWA on mobile or desktop
