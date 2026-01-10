@@ -9,7 +9,7 @@ Perform these steps:
 2. Run `git diff` to understand what changed
 3. Stage all changes with `git add .`
 4. Create a commit with a clear, concise message that describes what changed and why
-5. Pull with rebase (`git pull --rebase`) - the remote may be ahead due to GitHub workflow
+5. Pull with rebase (`git pull --rebase`) - sync with any remote changes
 6. Push to the current branch
 
 If the user provided additional context: $ARGUMENTS
