@@ -1,16 +1,2 @@
 {
-  "language": null,
-  "sourceFile": null,
-  "totalPages": 0,
-  "chunkSize": 2,
-  "totalChunks": 0,
-  "currentSection": {
-    "category": null,
-    "subcategory": null
-  },
-  "lastProcessedChunk": 0,
-  "extractedCount": 0,
-  "status": "not_initialized",
-  "errors": [],
-  "chunks": []
 }
