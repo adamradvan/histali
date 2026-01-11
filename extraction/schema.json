@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SIGHI Food Compatibility Data Schema",
+  "description": "Reference schema for PDF extraction - used by /extract-pdf command",
+  "definitions": {
+    "HistamineLevel": {
+      "type": "string",
+      "enum": ["WELL_TOLERATED", "MODERATELY_TOLERATED", "POORLY_TOLERATED", "VERY_POORLY_TOLERATED", "INSUFFICIENT_INFO", "VARIABLE"],
+      "description": "Histamine tolerance level from PDF table"
+    },
+    "Category": {
+      "type": "string",
+      "enum": ["ANIMAL_PRODUCTS", "PLANT_PRODUCTS", "BEVERAGES", "FOOD_ADDITIVES", "DIETARY_SUPPLEMENTS", "PREPARATIONS"]
+    },
+    "Subcategory": {
+      "type": "string",
+      "enum": [
+        "EGGS", "DAIRY", "MEAT", "FISH", "SEAFOOD", "OTHER",
+        "STARCHES", "NUTS", "OILS_FATS", "VEGETABLES", "HERBS", "FRUITS", "MUSHROOMS", "SWEETENERS", "SPICES",
+        "WATER", "ALCOHOLIC_BEVERAGES", "CAFFEINE_DRINKS", "FRUIT_JUICES", "VEGETABLE_JUICES", "MILK_SUBSTITUTES", "SOFT_DRINKS",
+        "FOOD_ADDITIVES", "DIETARY_SUPPLEMENTS", "PREPARATIONS"
+      ]
+    },
+    "Flag": {
+      "type": "string",
+      "enum": ["HIGH_HISTAMINE", "FAST_SPOILAGE", "OTHER_BIOGENIC_AMINES", "HISTAMINE_LIBERATOR", "DAO_BLOCKER"]
+    },
+    "FoodItem": {
+      "type": "object",
+      "required": ["name", "histamineLevel", "category", "subcategory"],
+      "properties": {
+        "name": { "type": "string" },
+        "histamineLevel": { "$ref": "#/definitions/HistamineLevel" },
+        "flags": { "type": "array", "items": { "$ref": "#/definitions/Flag" }, "default": [] },
+        "notes": { "type": "string", "default": "" },
+        "category": { "$ref": "#/definitions/Category" },
+        "subcategory": { "$ref": "#/definitions/Subcategory" }
+      }
+    }
+  },
+  "_extractionMappings": {
+    "histamineLevelFromPDF": {
+      "0": "WELL_TOLERATED",
+      "1": "MODERATELY_TOLERATED",
+      "2": "POORLY_TOLERATED",
+      "3": "VERY_POORLY_TOLERATED",
+      "?": "INSUFFICIENT_INFO",
+      "-": "VARIABLE",
+      "_colors": {
+        "green": "WELL_TOLERATED",
+        "yellow": "MODERATELY_TOLERATED",
+        "orange": "POORLY_TOLERATED",
+        "red": "VERY_POORLY_TOLERATED",
+        "gray": "INSUFFICIENT_INFO"
+      }
+    },
+    "flagsFromPDF": {
+      "H": "HIGH_HISTAMINE",
+      "H!": "FAST_SPOILAGE",
+      "A": "OTHER_BIOGENIC_AMINES",
+      "L": "HISTAMINE_LIBERATOR",
+      "B": "DAO_BLOCKER"
+    },
+    "categoryFromPDF_EN": {
+      "Animal products": "ANIMAL_PRODUCTS",
+      "Plant products": "PLANT_PRODUCTS",
+      "Beverages": "BEVERAGES",
+      "Food additives": "FOOD_ADDITIVES",
+      "Food supplements, medicines, drugs, stimulants": "DIETARY_SUPPLEMENTS",
+      "Preparations, mixtures": "PREPARATIONS"
+    },
+    "subcategoryFromPDF_EN": {
+      "Eggs": "EGGS",
+      "Dairy products": "DAIRY",
+      "Meat": "MEAT",
+      "Fish": "FISH",
+      "Seafood": "SEAFOOD",
+      "Other animal products": "OTHER",
+      "Starch sources": "STARCHES",
+      "Nuts, seeds": "NUTS",
+      "Oils, fats": "OILS_FATS",
+      "Vegetables": "VEGETABLES",
+      "Herbs": "HERBS",
+      "Fruits": "FRUITS",
+      "Mushrooms, algae": "MUSHROOMS",
+      "Sweeteners": "SWEETENERS",
+      "Spices": "SPICES",
+      "Water": "WATER",
+      "Alcoholic beverages": "ALCOHOLIC_BEVERAGES",
+      "Caffeine drinks, teas": "CAFFEINE_DRINKS",
+      "Fruit juices, nectars": "FRUIT_JUICES",
+      "Vegetable juices": "VEGETABLE_JUICES",
+      "Milk substitutes": "MILK_SUBSTITUTES",
+      "Soft drinks, soda": "SOFT_DRINKS"
+    },
+    "categoryFromPDF_SK": {
+      "Živočíšne produkty": "ANIMAL_PRODUCTS",
+      "Rastlinné produkty": "PLANT_PRODUCTS",
+      "Nápoje": "BEVERAGES",
+      "Potravinárske prísady": "FOOD_ADDITIVES",
+      "Výživové doplnky": "DIETARY_SUPPLEMENTS",
+      "Prípravky, zmesi": "PREPARATIONS"
+    },
+    "subcategoryFromPDF_SK": {
+      "Vajcia": "EGGS",
+      "Mliečne výrobky": "DAIRY",
+      "Mäso": "MEAT",
+      "Ryby": "FISH",
+      "Morské plody": "SEAFOOD",
+      "Škrobové zdroje": "STARCHES",
+      "Orechy, semená": "NUTS",
+      "Oleje, tuky": "OILS_FATS",
+      "Zelenina": "VEGETABLES",
+      "Bylinky": "HERBS",
+      "Ovocie": "FRUITS",
+      "Huby, riasy": "MUSHROOMS",
+      "Sladidlá": "SWEETENERS",
+      "Koreniny": "SPICES",
+      "Voda": "WATER",
+      "Alkoholické nápoje": "ALCOHOLIC_BEVERAGES",
+      "Kofeinové nápoje, čaje": "CAFFEINE_DRINKS",
+      "Ovocné šťavy": "FRUIT_JUICES",
+      "Zeleninové šťavy": "VEGETABLE_JUICES",
+      "Náhrady mlieka": "MILK_SUBSTITUTES",
+      "Nealkoholické nápoje": "SOFT_DRINKS"
+    }
+  }
+}

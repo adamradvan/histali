@@ -1,0 +1,10 @@
+# Generated files - regenerate with setup.sh
+images/
+chunks/
+output/
+
+# Keep source PDFs tracked (optional - comment out if large)
+# source/*.pdf
+
+# Keep progress tracked to resume extraction
+# !progress.json
