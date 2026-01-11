@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# Build Tailwind CSS
+npm run build:css
+git add dist/output.css
+
+# Update service worker cache version
 VERSION="histali-$(date +%s)"
 sed -i '' "s/const CACHE_NAME = .*/const CACHE_NAME = '$VERSION';/" sw.js
 git add sw.js

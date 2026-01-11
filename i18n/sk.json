@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Histali - Zoznam potravín",
-    "description": "Histali - Kompletný zoznam 460+ potravín pre histamínovú intoleranciu. Vyhľadávajte a filtrujte jedlá podľa úrovne histamínu. Založené na dátach SIGHI.",
+    "description": "Histali - Kompletný zoznam 880+ potravín pre histamínovú intoleranciu. Vyhľadávajte a filtrujte jedlá podľa úrovne histamínu. Založené na dátach SIGHI.",
     "tagline": "Objavte potraviny vhodné pri histamínovej intolerancii"
   },
   "search": {
@@ -137,5 +137,24 @@
   },
   "a11y": {
     "linkedinProfile": "LinkedIn profil autora"
+  },
+  "faq": {
+    "title": "Často kladené otázky",
+    "q1": {
+      "question": "Čo je histamínová intolerancia?",
+      "answer": "Histamínová intolerancia je stav, pri ktorom telo nedokáže efektívne rozkladať histamín z potravín. To môže viesť k symptómom ako bolesti hlavy, kožné problémy, tráviace ťažkosti alebo únava po konzumácii potravín s vysokým obsahom histamínu."
+    },
+    "q2": {
+      "question": "Ako používať tento zoznam potravín?",
+      "answer": "Použite vyhľadávanie na nájdenie konkrétnych potravín alebo filtre na zobrazenie potravín podľa úrovne tolerancie. Zelené potraviny sú dobre tolerované, žlté konzumujte s mierou a červené sa odporúča vynechať."
+    },
+    "q3": {
+      "question": "Čo znamenajú jednotlivé príznaky (H, H!, A, L, B)?",
+      "answer": "H = vysoký obsah histamínu, H! = rýchla tvorba histamínu pri skladovaní, A = obsahuje iné biogénne amíny, L = uvoľňuje histamín z buniek (liberátor), B = blokuje enzým DAO, ktorý rozkladá histamín."
+    },
+    "q4": {
+      "question": "Odkiaľ pochádzajú tieto údaje?",
+      "answer": "Údaje sú založené na zozname kompatibility potravín SIGHI (Swiss Interest Group Histamine Intolerance), ktorý je jedným z najkomplexnejších zdrojov informácií o histamínovej intolerancii."
+    }
   }
 }

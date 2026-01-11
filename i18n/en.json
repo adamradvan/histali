@@ -137,5 +137,24 @@
   },
   "a11y": {
     "linkedinProfile": "Author's LinkedIn profile"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "question": "What is histamine intolerance?",
+      "answer": "Histamine intolerance is a condition where the body cannot efficiently break down histamine from foods. This can lead to symptoms such as headaches, skin issues, digestive problems, or fatigue after consuming foods high in histamine."
+    },
+    "q2": {
+      "question": "How to use this food list?",
+      "answer": "Use the search to find specific foods or filters to display foods by tolerance level. Green foods are well tolerated, yellow should be consumed in moderation, and red foods are recommended to avoid."
+    },
+    "q3": {
+      "question": "What do the flags (H, H!, A, L, B) mean?",
+      "answer": "H = high histamine content, H! = rapid histamine formation during storage, A = contains other biogenic amines, L = releases histamine from cells (liberator), B = blocks the DAO enzyme that breaks down histamine."
+    },
+    "q4": {
+      "question": "Where does this data come from?",
+      "answer": "The data is based on the SIGHI (Swiss Interest Group Histamine Intolerance) food compatibility list, which is one of the most comprehensive sources of information about histamine intolerance."
+    }
   }
 }

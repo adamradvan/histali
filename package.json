@@ -1,0 +1,29 @@
+{
+  "name": "histali",
+  "version": "1.0.0",
+  "description": "[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://adamradvan.github.io/histali/) [![PWA Ready](https://img.shields.io/badge/PWA-ready-blue)](https://adamradvan.github.io/histali/)",
+  "main": "sw.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamradvan/histali.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamradvan/histali/issues"
+  },
+  "homepage": "https://github.com/adamradvan/histali#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwindcss": "^4.1.18"
+  }
+}

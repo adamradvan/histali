@@ -11,7 +11,7 @@ A searchable food compatibility guide for people with histamine intolerance. Wor
 
 ## Features
 
-- **Instant Search** — Filter 460+ foods with accent-insensitive matching
+- **Instant Search** — Filter 880+ foods with accent-insensitive matching
 - **Multi-Filter** — Filter by histamine level, subcategory, and flags (shareable via URL)
 - **Histamine Levels** — Color-coded compatibility ratings (well tolerated → very poorly tolerated)
 - **Detailed Info** — Flags for histamine content (H), liberators (L), DAO blockers (B), and more
@@ -42,13 +42,55 @@ This data is for informational purposes only. Always consult a healthcare profes
 
 ## Development
 
-After cloning, set up git hooks:
+### Prerequisites
+
+- Node.js (v18+)
+
+### Setup
 
 ```bash
+# Clone the repo
+git clone https://github.com/adamradvan/histali.git
+cd histali
+
+# Install dependencies
+npm install
+
+# Set up git hooks
 git config core.hooksPath .hooks
 ```
 
-This enables the pre-commit hook that auto-updates the service worker cache version.
+### Build
+
+The project uses Tailwind CSS v4. CSS is built from `src/input.css` to `dist/output.css`.
+
+```bash
+# Build CSS (minified)
+npm run build:css
+
+# Watch mode for development
+npm run watch:css
+```
+
+### Project Structure
+
+```
+histali/
+├── index.html          # Main app (single-page)
+├── dist/output.css     # Built Tailwind CSS (committed)
+├── src/input.css       # Tailwind source + custom styles
+├── data/               # Food data (sk.json, en.json)
+├── i18n/               # UI translations
+├── sw.js               # Service worker for offline
+└── .hooks/pre-commit   # Auto-builds CSS & updates SW cache
+```
+
+### How It Works
+
+1. **No build step required for HTML/JS** — Pure vanilla JS, no bundler
+2. **Tailwind CSS is pre-built** — `dist/output.css` is committed to the repo
+3. **Pre-commit hook** — Automatically rebuilds CSS and updates service worker cache version before each commit
+4. **GitHub Pages** — Serves static files directly, no CI/CD build step needed
 
 ## License
 

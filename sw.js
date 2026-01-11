@@ -1,7 +1,8 @@
-const CACHE_NAME = 'histali-1768145773';
+const CACHE_NAME = 'histali-1768163046';
 const ASSETS_TO_CACHE = [
   '/histali/',
   '/histali/index.html',
+  '/histali/dist/output.css',
   '/histali/data/sk.json',
   '/histali/data/en.json',
   '/histali/i18n/sk.json',
