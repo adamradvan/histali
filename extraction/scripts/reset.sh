@@ -1,6 +1,7 @@
 #!/bin/bash
 # Reset extraction workspace for new language
-# Usage: ./reset.sh [--keep-source]
+# Usage: ./reset.sh
+# Note: This only cleans the extraction/ folder, source PDFs are untouched
 
 set -e
 
@@ -15,19 +16,13 @@ NC='\033[0m'
 print_step() { echo -e "${GREEN}[STEP]${NC} $1"; }
 print_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 
-KEEP_SOURCE=false
-if [ "$1" == "--keep-source" ]; then
-    KEEP_SOURCE=true
-fi
-
 echo "This will reset the extraction workspace:"
-echo "  - Delete all chunk files"
-echo "  - Delete all image files"
-echo "  - Delete output files"
+echo "  - Delete all chunk files (extraction/chunks/)"
+echo "  - Delete all image files (extraction/images/)"
+echo "  - Delete output files (extraction/output/)"
 echo "  - Reset progress.json"
-if [ "$KEEP_SOURCE" = false ]; then
-    echo "  - Delete source PDFs (use --keep-source to preserve)"
-fi
+echo ""
+echo "Note: Source PDFs in source/ folder are NOT touched."
 echo ""
 read -p "Continue? [y/N] " -n 1 -r
 echo ""
@@ -48,11 +43,6 @@ mkdir -p "$EXTRACTION_DIR/images"
 print_step "Cleaning output..."
 rm -rf "$EXTRACTION_DIR/output"
 mkdir -p "$EXTRACTION_DIR/output"
-
-if [ "$KEEP_SOURCE" = false ]; then
-    print_step "Cleaning source PDFs..."
-    rm -f "$EXTRACTION_DIR/source/"*.pdf
-fi
 
 print_step "Resetting progress.json..."
 cat > "$EXTRACTION_DIR/progress.json" << 'EOF'
@@ -77,5 +67,5 @@ EOF
 print_step "Reset complete!"
 echo ""
 echo "Next steps:"
-echo "  1. Place your PDF in: extraction/source/foodlist-<lang>.pdf"
+echo "  1. Ensure your PDF is at: source/foodlist-<lang>.pdf"
 echo "  2. Run: ./extraction/scripts/setup.sh <lang>"

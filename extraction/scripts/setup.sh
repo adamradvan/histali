@@ -1,12 +1,13 @@
 #!/bin/bash
 # Setup script for PDF extraction
 # Usage: ./setup.sh <language-code> [pdf-path]
-# Example: ./setup.sh sk extraction/source/foodlist-sk.pdf
+# Example: ./setup.sh sk source/foodlist-sk.pdf
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 EXTRACTION_DIR="$(dirname "$SCRIPT_DIR")"
+PROJECT_ROOT="$(dirname "$EXTRACTION_DIR")"
 
 # Colors for output
 RED='\033[0;31m'
@@ -21,14 +22,14 @@ print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 # Check arguments
 if [ -z "$1" ]; then
     echo "Usage: $0 <language-code> [pdf-path]"
-    echo "Example: $0 sk extraction/source/foodlist-sk.pdf"
+    echo "Example: $0 sk source/foodlist-sk.pdf"
     echo ""
     echo "Language codes: en, sk, de, etc."
     exit 1
 fi
 
 LANG_CODE="$1"
-PDF_PATH="${2:-$EXTRACTION_DIR/source/foodlist-$LANG_CODE.pdf}"
+PDF_PATH="${2:-$PROJECT_ROOT/source/foodlist-$LANG_CODE.pdf}"
 
 # Validate PDF exists
 if [ ! -f "$PDF_PATH" ]; then
@@ -71,6 +72,8 @@ cd "$EXTRACTION_DIR/images"
 for f in page-*.png; do
     if [[ $f =~ page-([0-9]+)\.png ]]; then
         num="${BASH_REMATCH[1]}"
+        # Force base 10 interpretation (handles leading zeros like 08, 09)
+        num=$((10#$num))
         # Pad to 2 digits
         padded=$(printf "%02d" "$num")
         mv "$f" "page-$padded.png" 2>/dev/null || true
