@@ -1,8 +1,11 @@
-const CACHE_NAME = 'histali-1768136070';
+const CACHE_NAME = 'histali-1768143760';
 const ASSETS_TO_CACHE = [
   '/histali/',
   '/histali/index.html',
   '/histali/data/sk.json',
+  '/histali/data/en.json',
+  '/histali/i18n/sk.json',
+  '/histali/i18n/en.json',
   '/histali/icons/icon-192.png',
   '/histali/icons/icon-512.png',
   '/histali/icons/apple-touch-icon.png',

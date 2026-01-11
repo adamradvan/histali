@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "title": "Histali - Food List",
+    "description": "Histali - Complete list of 880+ foods for histamine intolerance. Search and filter foods by histamine level. Based on SIGHI data.",
+    "tagline": "Discover foods suitable for histamine intolerance"
+  },
+  "search": {
+    "label": "Search food",
+    "placeholder": "Search food...",
+    "clear": "Clear search",
+    "stats": {
+      "found": "Found: {count} of {total} foods",
+      "total": "Total: {total} foods"
+    }
+  },
+  "filters": {
+    "title": "Filters",
+    "button": "Filter",
+    "clearAll": "Clear all",
+    "apply": "Apply filters",
+    "histamineLevel": "Histamine level",
+    "subcategory": "Subcategory",
+    "flags": "Flags"
+  },
+  "table": {
+    "category": "Category",
+    "histamine": "Hist.",
+    "histamineTitle": "Histamine level - click to sort",
+    "flags": "Flags",
+    "food": "Food",
+    "foodTitle": "Food - click to sort",
+    "notes": "Notes"
+  },
+  "detail": {
+    "title": "Food details",
+    "close": "Close",
+    "properties": "Properties",
+    "notes": "Notes"
+  },
+  "histamineLevels": {
+    "WELL_TOLERATED": {
+      "title": "Well tolerated",
+      "subtitle": "suitable for histamine diet"
+    },
+    "MODERATELY_TOLERATED": {
+      "title": "Moderately tolerated",
+      "subtitle": "consume in moderation"
+    },
+    "POORLY_TOLERATED": {
+      "title": "Poorly tolerated",
+      "subtitle": "recommended to avoid"
+    },
+    "VERY_POORLY_TOLERATED": {
+      "title": "Very poorly tolerated",
+      "subtitle": "avoid completely"
+    },
+    "INSUFFICIENT_INFO": {
+      "title": "Insufficient information",
+      "subtitle": ""
+    },
+    "VARIABLE": {
+      "title": "Variable",
+      "subtitle": "depends on preparation or source"
+    },
+    "UNKNOWN": {
+      "title": "Unknown",
+      "subtitle": ""
+    }
+  },
+  "categories": {
+    "ANIMAL_PRODUCTS": "Animal products",
+    "PLANT_PRODUCTS": "Plant products"
+  },
+  "subcategories": {
+    "DAIRY": "Dairy",
+    "EGGS": "Eggs",
+    "MEAT": "Meat",
+    "FISH": "Fish",
+    "SEAFOOD": "Seafood",
+    "VEGETABLES": "Vegetables",
+    "FRUITS": "Fruits",
+    "LEGUMES": "Legumes",
+    "NUTS": "Nuts",
+    "STARCHES": "Starches",
+    "HERBS": "Herbs",
+    "SPICES": "Spices",
+    "BEVERAGES": "Beverages",
+    "WATER": "Water",
+    "OILS_FATS": "Oils & fats",
+    "SWEETENERS": "Sweeteners",
+    "MUSHROOMS": "Mushrooms",
+    "OTHER": "Other"
+  },
+  "flags": {
+    "HIGH_HISTAMINE": {
+      "abbr": "H",
+      "name": "High histamine",
+      "desc": "food contains high amounts of histamine"
+    },
+    "FAST_SPOILAGE": {
+      "abbr": "H!",
+      "name": "Fast histamine formation",
+      "desc": "histamine builds up quickly during storage"
+    },
+    "OTHER_BIOGENIC_AMINES": {
+      "abbr": "A",
+      "name": "Biogenic amines",
+      "desc": "contains other biogenic amines"
+    },
+    "HISTAMINE_LIBERATOR": {
+      "abbr": "L",
+      "name": "Liberator",
+      "desc": "releases histamine from cells"
+    },
+    "DAO_BLOCKER": {
+      "abbr": "B",
+      "name": "DAO blocker",
+      "desc": "blocks histamine-degrading enzyme"
+    }
+  },
+  "states": {
+    "loading": "Loading foods...",
+    "noResults": "No foods found",
+    "error": "Error loading data"
+  },
+  "navigation": {
+    "skipToContent": "Skip to content",
+    "scrollDown": "Scroll to bottom",
+    "scrollUp": "Scroll to top",
+    "mainContent": "Food list"
+  },
+  "footer": {
+    "disclaimer": "Data is for informational purposes only. Always consult your doctor.",
+    "source": "Data based on SIGHI food compatibility list, © Heinz Lamprecht, SIGHI.",
+    "sourceLink": "Source:",
+    "nonCommercial": "Non-commercial use only. For latest version, see original source."
+  },
+  "a11y": {
+    "linkedinProfile": "Author's LinkedIn profile"
+  }
+}

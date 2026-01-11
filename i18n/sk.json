@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "title": "Histali - Zoznam potravín",
+    "description": "Histali - Kompletný zoznam 460+ potravín pre histamínovú intoleranciu. Vyhľadávajte a filtrujte jedlá podľa úrovne histamínu. Založené na dátach SIGHI.",
+    "tagline": "Objavte potraviny vhodné pri histamínovej intolerancii"
+  },
+  "search": {
+    "label": "Hľadať potravinu",
+    "placeholder": "Hľadať potravinu...",
+    "clear": "Vymazať vyhľadávanie",
+    "stats": {
+      "found": "Nájdených: {count} z {total} potravín",
+      "total": "Celkom: {total} potravín"
+    }
+  },
+  "filters": {
+    "title": "Filtre",
+    "button": "Filtrovať",
+    "clearAll": "Vymazať všetko",
+    "apply": "Použiť filtre",
+    "histamineLevel": "Hladina histamínu",
+    "subcategory": "Podkategória",
+    "flags": "Príznaky"
+  },
+  "table": {
+    "category": "Kategória",
+    "histamine": "Hist.",
+    "histamineTitle": "Hladina histamínu - kliknite pre zoradenie",
+    "flags": "Príznaky",
+    "food": "Potravina",
+    "foodTitle": "Potravina - kliknite pre zoradenie",
+    "notes": "Poznámky"
+  },
+  "detail": {
+    "title": "Detail potraviny",
+    "close": "Zavrieť",
+    "properties": "Vlastnosti",
+    "notes": "Poznámky"
+  },
+  "histamineLevels": {
+    "WELL_TOLERATED": {
+      "title": "Dobre tolerované",
+      "subtitle": "vhodné pre histamínovú diétu"
+    },
+    "MODERATELY_TOLERATED": {
+      "title": "Stredne tolerované",
+      "subtitle": "konzumujte s mierou"
+    },
+    "POORLY_TOLERATED": {
+      "title": "Zle tolerované",
+      "subtitle": "odporúča sa vyhýbať"
+    },
+    "VERY_POORLY_TOLERATED": {
+      "title": "Veľmi zle tolerované",
+      "subtitle": "vyhýbajte sa úplne"
+    },
+    "INSUFFICIENT_INFO": {
+      "title": "Nedostatočné informácie",
+      "subtitle": ""
+    },
+    "VARIABLE": {
+      "title": "Premenlivé",
+      "subtitle": "závisí od prípravy alebo zdroja"
+    },
+    "UNKNOWN": {
+      "title": "Neznáme",
+      "subtitle": ""
+    }
+  },
+  "categories": {
+    "ANIMAL_PRODUCTS": "Živočíšne produkty",
+    "PLANT_PRODUCTS": "Rastlinné produkty"
+  },
+  "subcategories": {
+    "DAIRY": "Mliečne výrobky",
+    "EGGS": "Vajcia",
+    "MEAT": "Mäso",
+    "FISH": "Ryby",
+    "SEAFOOD": "Morské plody",
+    "VEGETABLES": "Zelenina",
+    "FRUITS": "Ovocie",
+    "LEGUMES": "Strukoviny",
+    "NUTS": "Orechy",
+    "STARCHES": "Zdroje škrobu",
+    "HERBS": "Bylinky",
+    "SPICES": "Koreniny",
+    "BEVERAGES": "Nápoje",
+    "WATER": "Voda",
+    "OILS_FATS": "Oleje a tuky",
+    "SWEETENERS": "Sladidlá",
+    "MUSHROOMS": "Huby",
+    "OTHER": "Ostatné"
+  },
+  "flags": {
+    "HIGH_HISTAMINE": {
+      "abbr": "H",
+      "name": "Vysoký histamín",
+      "desc": "potravina obsahuje vysoké množstvo histamínu"
+    },
+    "FAST_SPOILAGE": {
+      "abbr": "H!",
+      "name": "Rýchla tvorba histamínu",
+      "desc": "histamín sa rýchlo tvorí pri skladovaní"
+    },
+    "OTHER_BIOGENIC_AMINES": {
+      "abbr": "A",
+      "name": "Biogénne amíny",
+      "desc": "obsahuje iné biogénne amíny"
+    },
+    "HISTAMINE_LIBERATOR": {
+      "abbr": "L",
+      "name": "Liberátor",
+      "desc": "uvoľňuje histamín z buniek"
+    },
+    "DAO_BLOCKER": {
+      "abbr": "B",
+      "name": "Blokátor DAO",
+      "desc": "blokuje enzým rozkladajúci histamín"
+    }
+  },
+  "states": {
+    "loading": "Načítavam potraviny...",
+    "noResults": "Žiadne potraviny nenájdené",
+    "error": "Chyba pri načítaní dát"
+  },
+  "navigation": {
+    "skipToContent": "Preskočiť na obsah",
+    "scrollDown": "Prejsť na koniec",
+    "scrollUp": "Prejsť na začiatok",
+    "mainContent": "Zoznam potravín"
+  },
+  "footer": {
+    "disclaimer": "Data is for informational purposes only. Always consult your doctor.",
+    "source": "Data based on SIGHI food compatibility list, © Heinz Lamprecht, SIGHI.",
+    "sourceLink": "Source:",
+    "nonCommercial": "Non-commercial use only. For latest version, see original source."
+  },
+  "a11y": {
+    "linkedinProfile": "LinkedIn profil autora"
+  }
+}

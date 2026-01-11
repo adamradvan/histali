@@ -38,9 +38,10 @@
     <meta name="twitter:title" content="Histali - Zoznam potravín pre histamínovú intoleranciu">
     <meta name="twitter:description" content="Interaktívna databáza 460+ potravín s hodnotením kompatibility pri histamínovej intolerancii.">
 
-    <!-- hreflang (current + future languages) -->
-    <link rel="alternate" hreflang="sk" href="https://adamradvan.github.io/histali/">
-    <link rel="alternate" hreflang="x-default" href="https://adamradvan.github.io/histali/">
+    <!-- hreflang for i18n -->
+    <link rel="alternate" hreflang="sk" href="https://adamradvan.github.io/histali/?lang=sk">
+    <link rel="alternate" hreflang="en" href="https://adamradvan.github.io/histali/?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://adamradvan.github.io/histali/?lang=en">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -365,6 +366,67 @@
         .sortable-header.sorted .sort-indicator {
             opacity: 1;
         }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            opacity: 0.5;
+            transition: opacity 0.2s ease, transform 0.3s ease;
+        }
+        .lang-switcher:hover,
+        .lang-switcher:focus-within {
+            opacity: 1;
+        }
+        .lang-switcher.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .lang-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: color 0.15s ease, background-color 0.15s ease;
+        }
+        .lang-btn:hover {
+            color: #374151;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .lang-btn:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+        .lang-btn.active {
+            color: #1d4ed8;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .lang-divider {
+            color: #d1d5db;
+            font-weight: 300;
+        }
+        @media (max-width: 640px) {
+            .lang-switcher {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.375rem 0.5rem;
+            }
+        }
     </style>
 
     <!-- JSON-LD Structured Data -->
@@ -435,8 +497,15 @@
     </script>
 </head>
 <body class="bg-gray-50 min-h-screen">
+    <!-- Language Switcher -->
+    <div id="langSwitcher" class="lang-switcher" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="sk" aria-label="Slovensky">🇸🇰 SK</button>
+        <span class="lang-divider" aria-hidden="true">|</span>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">🇬🇧 EN</button>
+    </div>
+
     <!-- Skip to main content link for keyboard/screen reader users -->
-    <a href="#main-content" class="skip-link">Preskočiť na obsah</a>
+    <a href="#main-content" class="skip-link" data-i18n="navigation.skipToContent">Preskočiť na obsah</a>
 
     <!-- Fallback content for crawlers and no-JS browsers -->
     <noscript>
@@ -491,18 +560,19 @@
         <!-- Header -->
         <header class="mb-8 flex flex-col items-center justify-center" style="min-height: var(--header-size, 15vh);">
             <h1 class="text-6xl md:text-7xl font-bold text-gray-800 mb-3">HISTALI</h1>
-            <p class="text-xl md:text-2xl text-gray-600 text-center text-balance">Objavte potraviny vhodné pri histamínovej intolerancii</p>
+            <p class="text-xl md:text-2xl text-gray-600 text-center text-balance" data-i18n="meta.tagline">Objavte potraviny vhodné pri histamínovej intolerancii</p>
         </header>
 
         <!-- Search and Filter -->
         <div class="mb-6 relative">
             <div class="flex gap-2">
                 <div class="relative flex-1">
-                    <label for="searchInput" class="sr-only">Hľadať potravinu</label>
+                    <label for="searchInput" class="sr-only" data-i18n="search.label">Hľadať potravinu</label>
                     <input
                         type="text"
                         id="searchInput"
                         placeholder="Hľadať potravinu..."
+                        data-i18n-placeholder="search.placeholder"
                         class="w-full px-4 py-3 pl-12 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                     >
                     <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -512,6 +582,7 @@
                         id="clearSearch"
                         class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden"
                         aria-label="Vymazať vyhľadávanie"
+                        data-i18n-aria-label="search.clear"
                         type="button"
                     >
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -524,6 +595,7 @@
                     id="filterBtn"
                     class="relative px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition flex items-center justify-center"
                     aria-label="Filtrovať"
+                    data-i18n-aria-label="filters.button"
                     aria-expanded="false"
                     aria-controls="filterPanel"
                     type="button"
@@ -547,8 +619,8 @@
 
                 <!-- Sticky Header with clear button -->
                 <div class="flex justify-between items-center px-5 py-4 border-b border-gray-200 bg-white sticky top-0 z-10 rounded-t-xl md:rounded-t-lg">
-                    <h2 id="filterPanelTitle" class="text-lg font-bold text-gray-800">Filtre</h2>
-                    <button id="clearFilters" class="px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-medium border border-blue-300 rounded-lg transition">
+                    <h2 id="filterPanelTitle" class="text-lg font-bold text-gray-800" data-i18n="filters.title">Filtre</h2>
+                    <button id="clearFilters" class="px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-medium border border-blue-300 rounded-lg transition" data-i18n="filters.clearAll">
                         Vymazať všetko
                     </button>
                 </div>
@@ -556,7 +628,7 @@
                 <div class="filter-panel-content">
                     <!-- Histamine Level Section (always expanded) -->
                     <div class="mb-4">
-                        <h3 class="text-sm font-semibold text-gray-700 mb-3">Hladina histamínu</h3>
+                        <h3 class="text-sm font-semibold text-gray-700 mb-3" data-i18n="filters.histamineLevel">Hladina histamínu</h3>
                         <div class="space-y-2" id="histamineLevelFilters">
                             <!-- Will be populated by JavaScript -->
                         </div>
@@ -565,7 +637,7 @@
                     <!-- Subcategory Section (collapsible) -->
                     <div class="mb-4 border-t border-gray-200 pt-4">
                         <button type="button" class="filter-section-header collapsed flex justify-between items-center mb-3 w-full text-left" aria-expanded="false" aria-controls="subcategoryContent" onclick="toggleFilterSection('subcategory')">
-                            <h3 class="text-sm font-semibold text-gray-700">Podkategória</h3>
+                            <h3 class="text-sm font-semibold text-gray-700" data-i18n="filters.subcategory">Podkategória</h3>
                             <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -580,7 +652,7 @@
                     <!-- Flags Section (collapsible) -->
                     <div class="border-t border-gray-200 pt-4">
                         <button type="button" class="filter-section-header collapsed flex justify-between items-center mb-3 w-full text-left" aria-expanded="false" aria-controls="flagsContent" onclick="toggleFilterSection('flags')">
-                            <h3 class="text-sm font-semibold text-gray-700">Príznaky</h3>
+                            <h3 class="text-sm font-semibold text-gray-700" data-i18n="filters.flags">Príznaky</h3>
                             <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -594,7 +666,7 @@
 
                     <!-- Apply button (mobile) -->
                     <div class="mt-6 md:hidden">
-                        <button onclick="closeFilterPanel()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition" type="button">
+                        <button onclick="closeFilterPanel()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition" type="button" data-i18n="filters.apply">
                             Použiť filtre
                         </button>
                     </div>
@@ -603,31 +675,33 @@
         </div>
 
         <!-- Food Table -->
-        <main id="main-content" role="main" aria-label="Zoznam potravín" style="min-height: 80vh;">
+        <main id="main-content" role="main" aria-label="Zoznam potravín" data-i18n-aria-label="navigation.mainContent" style="min-height: 80vh;">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-100 border-b border-gray-200">
                         <tr>
-                            <th scope="col" class="px-2 py-3 text-center text-sm font-semibold text-gray-700 w-12"><span class="sr-only">Kategória</span></th>
+                            <th scope="col" class="px-2 py-3 text-center text-sm font-semibold text-gray-700 w-12"><span class="sr-only" data-i18n="table.category">Kategória</span></th>
                             <th scope="col"
                                 class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-20 sortable-header whitespace-nowrap"
                                 id="header-histamine"
                                 tabindex="0"
                                 aria-sort="none"
                                 title="Hladina histamínu - kliknite pre zoradenie"
+                                data-i18n-title="table.histamineTitle"
                                 onclick="handleSort('histamineLevel')"
-                                onkeydown="handleSortKeydown(event, 'histamineLevel')">Hist.<span class="sort-indicator" aria-hidden="true">↕</span></th>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24 hidden md:table-cell">Príznaky</th>
+                                onkeydown="handleSortKeydown(event, 'histamineLevel')"><span data-i18n="table.histamine">Hist.</span><span class="sort-indicator" aria-hidden="true">↕</span></th>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 w-24 hidden md:table-cell" data-i18n="table.flags">Príznaky</th>
                             <th scope="col"
                                 class="px-4 py-3 text-left text-sm font-semibold text-gray-700 sortable-header"
                                 id="header-name"
                                 tabindex="0"
                                 aria-sort="none"
                                 title="Potravina - kliknite pre zoradenie"
+                                data-i18n-title="table.foodTitle"
                                 onclick="handleSort('name')"
-                                onkeydown="handleSortKeydown(event, 'name')">Potravina<span class="sort-indicator" aria-hidden="true">↕</span></th>
-                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Poznámky</th>
+                                onkeydown="handleSortKeydown(event, 'name')"><span data-i18n="table.food">Potravina</span><span class="sort-indicator" aria-hidden="true">↕</span></th>
+                            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-gray-700 hidden md:table-cell" data-i18n="table.notes">Poznámky</th>
                         </tr>
                     </thead>
                     <tbody id="foodTableBody">
@@ -640,7 +714,7 @@
         <!-- Loading -->
         <div id="loading" class="text-center py-8" role="status" aria-live="polite">
             <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-blue-500" aria-hidden="true"></div>
-            <p class="mt-2 text-gray-600">Načítavam potraviny...</p>
+            <p class="mt-2 text-gray-600" data-i18n="states.loading">Načítavam potraviny...</p>
         </div>
 
         <!-- No results -->
@@ -648,7 +722,7 @@
             <svg class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <p class="mt-2 text-gray-600">Žiadne potraviny nenájdené</p>
+            <p class="mt-2 text-gray-600" data-i18n="states.noResults">Žiadne potraviny nenájdené</p>
         </div>
         </main>
 
@@ -679,13 +753,13 @@
 
     <!-- Sheet (Bottom on mobile, Right on desktop) -->
     <div id="sheetBackdrop" class="sheet-backdrop" onclick="closeSheet()"></div>
-    <div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-label="Detail potraviny">
+    <div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-label="Detail potraviny" data-i18n-aria-label="detail.title">
         <div class="sheet-handle" id="sheetHandle">
             <div class="handle-bar"></div>
         </div>
         <div class="sheet-header">
             <h2 id="sheetTitle" class="text-xl font-bold text-gray-800"></h2>
-            <button id="sheetCloseBtn" onclick="closeSheet()" class="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Zavrieť" type="button">
+            <button id="sheetCloseBtn" onclick="closeSheet()" class="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Zavrieť" data-i18n-aria-label="detail.close" type="button">
                 <svg class="w-6 h-6 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -697,18 +771,210 @@
     </div>
 
     <!-- Scroll Navigation FAB -->
-    <button id="scrollDownBtn" class="scroll-fab" aria-label="Prejsť na koniec" type="button">
+    <button id="scrollDownBtn" class="scroll-fab" aria-label="Prejsť na koniec" data-i18n-aria-label="navigation.scrollDown" type="button">
         <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
     </button>
-    <button id="scrollUpBtn" class="scroll-fab hidden" aria-label="Prejsť na začiatok" type="button">
+    <button id="scrollUpBtn" class="scroll-fab hidden" aria-label="Prejsť na začiatok" data-i18n-aria-label="navigation.scrollUp" type="button">
         <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
         </svg>
     </button>
 
     <script>
+        // ========================================
+        // i18n Module
+        // ========================================
+        const i18n = {
+            currentLang: 'en',
+            translations: {},
+            supportedLangs: ['sk', 'en'],
+            defaultLang: 'en',
+
+            // Detect language from URL param > localStorage > browser > default
+            detectLanguage() {
+                const params = new URLSearchParams(window.location.search);
+                const urlLang = params.get('lang');
+                if (urlLang && this.supportedLangs.includes(urlLang)) {
+                    return urlLang;
+                }
+
+                const storedLang = localStorage.getItem('histali-lang');
+                if (storedLang && this.supportedLangs.includes(storedLang)) {
+                    return storedLang;
+                }
+
+                const browserLang = navigator.language.split('-')[0];
+                if (this.supportedLangs.includes(browserLang)) {
+                    return browserLang;
+                }
+
+                return this.defaultLang;
+            },
+
+            // Load translation file
+            async loadTranslations(lang) {
+                try {
+                    const response = await fetch(`i18n/${lang}.json`);
+                    if (!response.ok) throw new Error('Translation not found');
+                    this.translations = await response.json();
+                    this.currentLang = lang;
+                    localStorage.setItem('histali-lang', lang);
+                } catch (error) {
+                    console.error(`Failed to load ${lang} translations, falling back to ${this.defaultLang}`);
+                    if (lang !== this.defaultLang) {
+                        await this.loadTranslations(this.defaultLang);
+                    }
+                }
+            },
+
+            // Get translation with optional interpolation
+            // Usage: i18n.t('search.stats.found', { count: 10, total: 100 })
+            t(key, params = {}) {
+                const keys = key.split('.');
+                let value = this.translations;
+
+                for (const k of keys) {
+                    if (value && typeof value === 'object' && k in value) {
+                        value = value[k];
+                    } else {
+                        console.warn(`Translation missing: ${key}`);
+                        return key; // Return key as fallback
+                    }
+                }
+
+                if (typeof value !== 'string') {
+                    return value; // Return object for nested access
+                }
+
+                // Interpolate {placeholder} values
+                return value.replace(/\{(\w+)\}/g, (match, placeholder) => {
+                    return params[placeholder] !== undefined ? params[placeholder] : match;
+                });
+            },
+
+            // Switch language and reload data
+            async setLanguage(lang) {
+                if (!this.supportedLangs.includes(lang)) return;
+
+                await this.loadTranslations(lang);
+                this.updateURLParam(lang);
+                this.updateDocumentLang();
+                this.applyTranslations();
+                this.updateLangSwitcherUI();
+
+                // Dispatch event for components that need to re-render
+                document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+            },
+
+            // Update URL param without losing other params
+            updateURLParam(lang) {
+                const params = new URLSearchParams(window.location.search);
+                params.set('lang', lang);
+                const newURL = `${window.location.pathname}?${params.toString()}`;
+                window.history.replaceState({}, '', newURL);
+            },
+
+            // Update document lang attribute
+            updateDocumentLang() {
+                document.documentElement.lang = this.currentLang;
+            },
+
+            // Update active state on language buttons
+            updateLangSwitcherUI() {
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === this.currentLang);
+                });
+            },
+
+            // Apply translations to all data-i18n elements
+            applyTranslations() {
+                // Text content
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    el.textContent = this.t(key);
+                });
+
+                // Placeholders
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    el.placeholder = this.t(el.getAttribute('data-i18n-placeholder'));
+                });
+
+                // Titles
+                document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                    el.title = this.t(el.getAttribute('data-i18n-title'));
+                });
+
+                // Aria-labels
+                document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+                    el.setAttribute('aria-label', this.t(el.getAttribute('data-i18n-aria-label')));
+                });
+
+                // Update page title
+                document.title = this.t('meta.title');
+            },
+
+            // Initialize i18n
+            async init() {
+                this.currentLang = this.detectLanguage();
+                await this.loadTranslations(this.currentLang);
+                this.updateDocumentLang();
+                this.applyTranslations();
+                this.updateLangSwitcherUI();
+                this.initLangSwitcher();
+                this.initScrollBehavior();
+                return this.currentLang;
+            },
+
+            // Set up language switcher click handlers
+            initLangSwitcher() {
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.setLanguage(btn.dataset.lang);
+                    });
+                });
+            },
+
+            // Scroll-based visibility for language switcher
+            initScrollBehavior() {
+                const langSwitcher = document.getElementById('langSwitcher');
+                let lastScrollY = 0;
+                let ticking = false;
+
+                const updateVisibility = () => {
+                    const currentScrollY = window.scrollY;
+
+                    // At top of page - always show
+                    if (currentScrollY < 100) {
+                        langSwitcher.classList.remove('hidden');
+                    }
+                    // Scrolling down - hide
+                    else if (currentScrollY > lastScrollY) {
+                        langSwitcher.classList.add('hidden');
+                    }
+                    // Scrolling up - show
+                    else {
+                        langSwitcher.classList.remove('hidden');
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                };
+
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateVisibility);
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+        };
+
+        // ========================================
+        // Configuration
+        // ========================================
+
         // Histamine level configuration
         const HISTAMINE_CONFIG = {
             WELL_TOLERATED: { value: '0', color: 'bg-hist-0', textColor: 'text-white' },
@@ -729,62 +995,64 @@
             VARIABLE: 5
         };
 
-        // Full descriptions for histamine levels (Slovak)
-        const HISTAMINE_DESCRIPTIONS = {
-            WELL_TOLERATED: { title: 'Dobre tolerované', subtitle: 'vhodné pre histamínovú diétu' },
-            MODERATELY_TOLERATED: { title: 'Stredne tolerované', subtitle: 'konzumujte s mierou' },
-            POORLY_TOLERATED: { title: 'Zle tolerované', subtitle: 'odporúča sa vyhýbať' },
-            VERY_POORLY_TOLERATED: { title: 'Veľmi zle tolerované', subtitle: 'vyhýbajte sa úplne' },
-            INSUFFICIENT_INFO: { title: 'Nedostatočné informácie', subtitle: '' },
-            VARIABLE: { title: 'Premenlivé', subtitle: 'závisí od prípravy alebo zdroja' }
-        };
+        // Helper to get histamine level description from translations
+        function getHistamineDesc(level) {
+            return i18n.t(`histamineLevels.${level}`) || { title: level, subtitle: '' };
+        }
 
-        // Category configuration with colors
+        // Category configuration with colors (names come from i18n)
         const CATEGORY_CONFIG = {
-            ANIMAL_PRODUCTS: {
-                name: 'Živočíšne produkty',
-                bgColor: 'bg-sky-600',
-                textColor: 'text-white'
-            },
-            PLANT_PRODUCTS: {
-                name: 'Rastlinné produkty',
-                bgColor: 'bg-emerald-600',
-                textColor: 'text-white'
-            }
+            ANIMAL_PRODUCTS: { bgColor: 'bg-sky-600', textColor: 'text-white' },
+            PLANT_PRODUCTS: { bgColor: 'bg-emerald-600', textColor: 'text-white' }
         };
 
-        // Subcategory configuration with distinct colors
+        // Helper to get category name from translations
+        function getCategoryName(key) {
+            return i18n.t(`categories.${key}`);
+        }
+
+        // Subcategory configuration with distinct colors (names come from i18n)
         const SUBCATEGORY_CONFIG = {
             // Animal product subcategories
-            DAIRY: { name: 'Mliečne výrobky', bgColor: 'bg-sky-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🥛' },
-            EGGS: { name: 'Vajcia', bgColor: 'bg-amber-300', textColor: 'text-amber-900', parent: 'ANIMAL_PRODUCTS', emoji: '🥚' },
-            MEAT: { name: 'Mäso', bgColor: 'bg-rose-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🥩' },
-            FISH: { name: 'Ryby', bgColor: 'bg-teal-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🐟' },
-            SEAFOOD: { name: 'Morské plody', bgColor: 'bg-cyan-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🐙' },
+            DAIRY: { bgColor: 'bg-sky-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🥛' },
+            EGGS: { bgColor: 'bg-amber-300', textColor: 'text-amber-900', parent: 'ANIMAL_PRODUCTS', emoji: '🥚' },
+            MEAT: { bgColor: 'bg-rose-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🥩' },
+            FISH: { bgColor: 'bg-teal-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🐟' },
+            SEAFOOD: { bgColor: 'bg-cyan-400', textColor: 'text-white', parent: 'ANIMAL_PRODUCTS', emoji: '🐙' },
             // Plant product subcategories
-            VEGETABLES: { name: 'Zelenina', bgColor: 'bg-green-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🥦' },
-            FRUITS: { name: 'Ovocie', bgColor: 'bg-orange-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🍎' },
-            LEGUMES: { name: 'Strukoviny', bgColor: 'bg-lime-500', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🫘' },
-            NUTS: { name: 'Orechy', bgColor: 'bg-yellow-600', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🥜' },
-            STARCHES: { name: 'Zdroje škrobu', bgColor: 'bg-amber-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🥖' },
-            HERBS: { name: 'Bylinky', bgColor: 'bg-emerald-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🌿' },
-            SPICES: { name: 'Koreniny', bgColor: 'bg-red-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🌶️' },
-            BEVERAGES: { name: 'Nápoje', bgColor: 'bg-violet-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '☕' },
-            WATER: { name: 'Voda', bgColor: 'bg-blue-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '💧' },
-            OILS_FATS: { name: 'Oleje a tuky', bgColor: 'bg-yellow-500', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🫒' },
-            SWEETENERS: { name: 'Sladidlá', bgColor: 'bg-pink-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🍯' },
-            MUSHROOMS: { name: 'Huby', bgColor: 'bg-stone-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🍄' },
-            OTHER: { name: 'Ostatné', bgColor: 'bg-gray-400', textColor: 'text-white', parent: null, emoji: '📦' }
+            VEGETABLES: { bgColor: 'bg-green-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🥦' },
+            FRUITS: { bgColor: 'bg-orange-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🍎' },
+            LEGUMES: { bgColor: 'bg-lime-500', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🫘' },
+            NUTS: { bgColor: 'bg-yellow-600', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🥜' },
+            STARCHES: { bgColor: 'bg-amber-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🥖' },
+            HERBS: { bgColor: 'bg-emerald-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🌿' },
+            SPICES: { bgColor: 'bg-red-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🌶️' },
+            BEVERAGES: { bgColor: 'bg-violet-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '☕' },
+            WATER: { bgColor: 'bg-blue-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '💧' },
+            OILS_FATS: { bgColor: 'bg-yellow-500', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🫒' },
+            SWEETENERS: { bgColor: 'bg-pink-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🍯' },
+            MUSHROOMS: { bgColor: 'bg-stone-400', textColor: 'text-white', parent: 'PLANT_PRODUCTS', emoji: '🍄' },
+            OTHER: { bgColor: 'bg-gray-400', textColor: 'text-white', parent: null, emoji: '📦' }
         };
 
-        // Flag configuration
+        // Helper to get subcategory name from translations
+        function getSubcategoryName(key) {
+            return i18n.t(`subcategories.${key}`);
+        }
+
+        // Flag configuration (names/descriptions come from i18n)
         const FLAG_CONFIG = {
-            HIGH_HISTAMINE: { abbr: 'H', name: 'Vysoký histamín', desc: 'potravina obsahuje vysoké množstvo histamínu', color: 'bg-red-500' },
-            FAST_SPOILAGE: { abbr: 'H!', name: 'Rýchla tvorba histamínu', desc: 'histamín sa rýchlo tvorí pri skladovaní', color: 'bg-red-600' },
-            OTHER_BIOGENIC_AMINES: { abbr: 'A', name: 'Biogénne amíny', desc: 'obsahuje iné biogénne amíny', color: 'bg-indigo-500' },
-            HISTAMINE_LIBERATOR: { abbr: 'L', name: 'Liberátor', desc: 'uvoľňuje histamín z buniek', color: 'bg-teal-500' },
-            DAO_BLOCKER: { abbr: 'B', name: 'Blokátor DAO', desc: 'blokuje enzým rozkladajúci histamín', color: 'bg-blue-500' }
+            HIGH_HISTAMINE: { color: 'bg-red-500' },
+            FAST_SPOILAGE: { color: 'bg-red-600' },
+            OTHER_BIOGENIC_AMINES: { color: 'bg-indigo-500' },
+            HISTAMINE_LIBERATOR: { color: 'bg-teal-500' },
+            DAO_BLOCKER: { color: 'bg-blue-500' }
         };
+
+        // Helper to get flag info from translations
+        function getFlagInfo(key) {
+            return i18n.t(`flags.${key}`) || { abbr: '?', name: key, desc: '' };
+        }
 
         // Normalize string for accent-insensitive search
         const normalize = (str) => str
@@ -858,9 +1126,11 @@
         // Open sheet with food details
         function openSheet(food) {
             const histConfig = HISTAMINE_CONFIG[food.histamineLevel] || HISTAMINE_CONFIG.INSUFFICIENT_INFO;
-            const histDesc = HISTAMINE_DESCRIPTIONS[food.histamineLevel] || { title: 'Neznáme', subtitle: '' };
-            const catConfig = CATEGORY_CONFIG[food.category] || { name: food.category, bgColor: 'bg-gray-600', textColor: 'text-white' };
-            const subConfig = SUBCATEGORY_CONFIG[food.subcategory] || { name: food.subcategory, bgColor: 'bg-gray-400', textColor: 'text-white' };
+            const histDesc = getHistamineDesc(food.histamineLevel);
+            const catConfig = CATEGORY_CONFIG[food.category] || { bgColor: 'bg-gray-600', textColor: 'text-white' };
+            const subConfig = SUBCATEGORY_CONFIG[food.subcategory] || { bgColor: 'bg-gray-400', textColor: 'text-white' };
+            const catName = getCategoryName(food.category);
+            const subName = getSubcategoryName(food.subcategory);
 
             sheetTitle.textContent = capitalizeFirst(food.name);
 
@@ -869,10 +1139,10 @@
                     <!-- Category Chips -->
                     <div class="flex flex-wrap gap-2">
                         <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium ${catConfig.bgColor} ${catConfig.textColor}">
-                            ${escapeHtml(catConfig.name)}
+                            ${escapeHtml(catName)}
                         </span>
                         <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium ${subConfig.bgColor} ${subConfig.textColor}">
-                            ${subConfig.emoji ? subConfig.emoji + ' ' : ''}${escapeHtml(subConfig.name)}
+                            ${subConfig.emoji ? subConfig.emoji + ' ' : ''}${escapeHtml(subName)}
                         </span>
                     </div>
 
@@ -893,26 +1163,27 @@
             html += `
                 <hr class="border-gray-200">
                 <div>
-                    <h3 class="font-semibold text-gray-700 mb-3">Vlastnosti</h3>
+                    <h3 class="font-semibold text-gray-700 mb-3">${escapeHtml(i18n.t('detail.properties'))}</h3>
                     <div class="space-y-2">
             `;
             Object.entries(FLAG_CONFIG).forEach(([flagKey, flagConfig]) => {
+                const flagInfo = getFlagInfo(flagKey);
                 const isActive = activeFlags.includes(flagKey);
                 if (isActive) {
                     html += `
                         <div class="flex items-start gap-3">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded ${flagConfig.color} text-white font-bold text-sm flex-shrink-0">${flagConfig.abbr}</span>
+                            <span class="inline-flex items-center justify-center w-8 h-8 rounded ${flagConfig.color} text-white font-bold text-sm flex-shrink-0">${flagInfo.abbr}</span>
                             <div class="text-gray-700">
-                                <span class="font-semibold">${escapeHtml(flagConfig.name)}</span> - ${escapeHtml(flagConfig.desc)}
+                                <span class="font-semibold">${escapeHtml(flagInfo.name)}</span> - ${escapeHtml(flagInfo.desc)}
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
                         <div class="flex items-start gap-3 opacity-60">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded bg-gray-300 text-gray-500 font-bold text-sm flex-shrink-0">${flagConfig.abbr}</span>
+                            <span class="inline-flex items-center justify-center w-8 h-8 rounded bg-gray-300 text-gray-500 font-bold text-sm flex-shrink-0">${flagInfo.abbr}</span>
                             <div class="text-gray-400">
-                                <span class="font-semibold">${escapeHtml(flagConfig.name)}</span> - ${escapeHtml(flagConfig.desc)}
+                                <span class="font-semibold">${escapeHtml(flagInfo.name)}</span> - ${escapeHtml(flagInfo.desc)}
                             </div>
                         </div>
                     `;
@@ -928,7 +1199,7 @@
                 html += `
                     <hr class="border-gray-200">
                     <div>
-                        <h3 class="font-semibold text-gray-700 mb-2">Poznámky</h3>
+                        <h3 class="font-semibold text-gray-700 mb-2">${escapeHtml(i18n.t('detail.notes'))}</h3>
                         <p class="text-gray-600">${escapeHtml(food.notes)}</p>
                     </div>
                 `;
@@ -1089,12 +1360,12 @@
             const mainHistamineLevels = ['WELL_TOLERATED', 'MODERATELY_TOLERATED', 'POORLY_TOLERATED', 'VERY_POORLY_TOLERATED'];
             histamineLevelFiltersEl.innerHTML = mainHistamineLevels.map(level => {
                 const config = HISTAMINE_CONFIG[level];
-                const desc = HISTAMINE_DESCRIPTIONS[level];
+                const desc = getHistamineDesc(level);
                 return `
                     <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <input type="checkbox" class="filter-checkbox" data-filter="histamineLevel" value="${level}">
                         <span class="inline-flex items-center justify-center w-7 h-7 rounded ${config.color} ${config.textColor} text-sm font-bold">${config.value}</span>
-                        <span class="text-gray-700">${desc.title}</span>
+                        <span class="text-gray-700">${escapeHtml(desc.title)}</span>
                     </label>
                 `;
             }).join('');
@@ -1105,18 +1376,19 @@
                     <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <input type="checkbox" class="filter-checkbox" data-filter="subcategory" value="${key}">
                         <span class="text-lg">${config.emoji || ''}</span>
-                        <span class="text-gray-700">${config.name}</span>
+                        <span class="text-gray-700">${escapeHtml(getSubcategoryName(key))}</span>
                     </label>
                 `;
             }).join('');
 
             // Flags
             flagsFiltersEl.innerHTML = Object.entries(FLAG_CONFIG).map(([key, config]) => {
+                const flagInfo = getFlagInfo(key);
                 return `
                     <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <input type="checkbox" class="filter-checkbox" data-filter="flags" value="${key}">
-                        <span class="inline-flex items-center justify-center w-7 h-7 rounded ${config.color} text-white text-sm font-bold">${config.abbr}</span>
-                        <span class="text-gray-700">${config.name}</span>
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded ${config.color} text-white text-sm font-bold">${flagInfo.abbr}</span>
+                        <span class="text-gray-700">${escapeHtml(flagInfo.name)}</span>
                     </label>
                 `;
             }).join('');
@@ -1245,6 +1517,9 @@
         function updateURLParams() {
             const params = new URLSearchParams();
 
+            // Preserve language param
+            params.set('lang', i18n.currentLang);
+
             if (filterState.histamineLevels.size > 0) {
                 params.set('hist', Array.from(filterState.histamineLevels).join(','));
             }
@@ -1354,14 +1629,15 @@
             if (food.flags && food.flags.length > 0) {
                 flagsHtml = food.flags.map(f => {
                     const flagConfig = FLAG_CONFIG[f];
+                    const flagInfo = getFlagInfo(f);
                     if (flagConfig) {
-                        return `<span class="inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold text-white ${flagConfig.color}" title="${escapeHtml(flagConfig.name)}" aria-hidden="true">${flagConfig.abbr}</span>`;
+                        return `<span class="inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold text-white ${flagConfig.color}" title="${escapeHtml(flagInfo.name)}" aria-hidden="true">${flagInfo.abbr}</span>`;
                     }
                     return f;
                 }).join(' ');
             }
 
-            const histDesc = HISTAMINE_DESCRIPTIONS[food.histamineLevel] || { title: 'Neznáme', subtitle: '' };
+            const histDesc = getHistamineDesc(food.histamineLevel);
 
             const tr = document.createElement('tr');
             tr.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors food-row';
@@ -1521,9 +1797,9 @@
             // Update stats
             const hasFilters = getActiveFilterCount() > 0;
             if (query || hasFilters) {
-                searchStats.textContent = `Nájdených: ${filtered.length} z ${allFoods.length} potravín`;
+                searchStats.textContent = i18n.t('search.stats.found', { count: filtered.length, total: allFoods.length });
             } else {
-                searchStats.textContent = `Celkom: ${allFoods.length} potravín`;
+                searchStats.textContent = i18n.t('search.stats.total', { total: allFoods.length });
             }
 
             // Update URL (debounced for text input)
@@ -1531,16 +1807,23 @@
         }
 
         // Initialize
+        // Load food data for current language
+        async function loadFoodData() {
+            const response = await fetch(`data/${i18n.currentLang}.json`);
+            if (!response.ok) {
+                throw new Error('Failed to load data');
+            }
+            const data = await response.json();
+            allFoods = data.foods;
+        }
+
         async function init() {
             try {
-                // Fetch data
-                const response = await fetch('data/sk.json');
-                if (!response.ok) {
-                    throw new Error('Failed to load data');
-                }
+                // Initialize i18n first
+                await i18n.init();
 
-                const data = await response.json();
-                allFoods = data.foods;
+                // Fetch data for current language
+                await loadFoodData();
 
                 // Hide loading
                 loadingEl.classList.add('hidden');
@@ -1581,11 +1864,30 @@
                     }
                 });
 
+                // Handle language changes - reload data and re-render
+                document.addEventListener('languageChanged', async () => {
+                    await loadFoodData();
+                    populateFilterOptions();
+                    // Re-apply checkbox states after repopulating
+                    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                        const filterType = checkbox.dataset.filter;
+                        const value = checkbox.value;
+                        if (filterType === 'histamineLevel' && filterState.histamineLevels.has(value)) {
+                            checkbox.checked = true;
+                        } else if (filterType === 'subcategory' && filterState.subcategories.has(value)) {
+                            checkbox.checked = true;
+                        } else if (filterType === 'flags' && filterState.flags.has(value)) {
+                            checkbox.checked = true;
+                        }
+                    });
+                    handleSearch();
+                });
+
             } catch (error) {
                 console.error('Error loading data:', error);
                 loadingEl.innerHTML = `
-                    <p class="text-red-600">Chyba pri načítaní dát</p>
-                    <p class="text-sm text-gray-500 mt-1">${error.message}</p>
+                    <p class="text-red-600">${escapeHtml(i18n.t('states.error'))}</p>
+                    <p class="text-sm text-gray-500 mt-1">${escapeHtml(error.message)}</p>
                 `;
             }
         }
