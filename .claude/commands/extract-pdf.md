@@ -5,7 +5,7 @@ Extract structured food compatibility data from SIGHI PDF using vision capabilit
 ## Prerequisites
 
 Before running this command:
-1. Place PDF at `extraction/source/foodlist-<lang>.pdf`
+1. Ensure PDF exists at `source/foodlist-<lang>.pdf`
 2. Run `./extraction/scripts/setup.sh <lang>` to convert PDF to images
 
 ## Instructions
